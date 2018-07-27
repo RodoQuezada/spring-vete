@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+
+            <h4 class="card-title">
+                <a th:href="@{'/cliente/ver/' + ${paciente.cliente.id}}" class="btn btn-light btn-xs">&laquo; volver</a>
+            </h4>
+
+            <img th:if="${#strings.length(paciente.foto) > 0}" class="img-thumbnail rounded float-left"
+                 style="max-width: 25%;" th:src="@{'/paciente/uploads/'+${paciente.foto}}" th:alt="${paciente.foto}">
+
+            <ul class="list-group my-2">
+                <li class="list-group-item list-group-item-secondary" th:text="'Datos del Paciente'"></li>
+                <li class="list-group-item" th:text="'Nombre Mascota: ' + ${paciente.nombre}"></li>
+                <li class="list-group-item" th:text="'Fecha Nacimiento: ' + ${paciente.fechaNacimiento}"></li>
+                <li class="list-group-item" th:text="'Fecha Fallecimiento: ' + ${paciente.fechaFallecimiento}"></li>
+                <li class="list-group-item" th:text="'Sexo: ' + ${paciente.sexo}"></li>
+                <li class="list-group-item" th:text="'Castrado: ' + ${paciente.castrado}"></li>
+            </ul>
+
+
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+</html>
