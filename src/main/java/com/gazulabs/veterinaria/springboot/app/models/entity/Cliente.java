@@ -6,7 +6,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "clientes")
@@ -40,11 +42,17 @@ public class Cliente implements Serializable {
     @Column(name = "activo_sistema")
     private Boolean activoSistema;
 
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Paciente> pacientes;
 
     @PrePersist
     public void prePersist() {
         createAt = new Date();
         activoSistema = true;
+    }
+
+    public Cliente(){
+        pacientes = new ArrayList<Paciente>();
     }
 
     public Long getId() {
@@ -125,5 +133,17 @@ public class Cliente implements Serializable {
 
     public void setActivoSistema(Boolean activoSistema) {
         this.activoSistema = activoSistema;
+    }
+
+    public List<Paciente> getPacientes() {
+        return pacientes;
+    }
+
+    public void setPacientes(List<Paciente> pacientes) {
+        this.pacientes = pacientes;
+    }
+
+    public void agregarPaciente(Paciente paciente){
+        pacientes.add(paciente);
     }
 }

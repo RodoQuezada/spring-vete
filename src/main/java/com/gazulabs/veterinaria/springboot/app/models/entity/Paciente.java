@@ -27,12 +27,22 @@ public class Paciente implements Serializable {
     private Date fechaFallecimiento;
     @Column(name = "codigo_chip")
     private String codigoChip;
-    @NotEmpty
+
     private char sexo;
-    @NotEmpty
+
     private Boolean castrado;
-    @NotEmpty
+
     private String foto;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Cliente cliente;
+
+    @PrePersist
+    public void prePersist(){
+        createAt = new Date();
+        fechaNacimiento = new Date();
+        fechaFallecimiento = new Date();
+    }
 
     public Long getId() {
         return id;
@@ -104,5 +114,13 @@ public class Paciente implements Serializable {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

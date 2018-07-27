@@ -33,7 +33,7 @@
                     <label for="nombre" class="col-sm-2 col-form-label">Nombre:</label>
                     <div class="col-sm-6">
                         <input id="nombre" type="text" th:field="*{nombre}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]+"/>
+                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]{4-50}"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}"
                                th:errors="*{nombre}"></small>
                     </div>
@@ -43,7 +43,7 @@
                     <label for="apellido_paterno" class="col-sm-2 col-form-label">Apellido Paterno:</label>
                     <div class="col-sm-6">
                         <input id="apellido_paterno" type="text" th:field="*{apellido_paterno}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]+"/>
+                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]{4-50}"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('apellido_paterno')}"
                                th:errors="*{apellido_paterno}"></small>
                     </div>
@@ -53,7 +53,7 @@
                     <label for="apellido_materno" class="col-sm-2 col-form-label">Apellido Materno:</label>
                     <div class="col-sm-6">
                         <input id="apellido_materno" type="text" th:field="*{apellido_materno}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]+"/>
+                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]{4-50}"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('apellido_materno')}"
                                th:errors="*{apellido_materno}"></small>
                     </div>
