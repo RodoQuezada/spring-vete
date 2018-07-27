@@ -18,6 +18,7 @@ public class Paciente implements Serializable {
     private Long id;
     @NotEmpty
     private String nombre;
+
     @Column(name = "create_at")
     @Temporal(TemporalType.DATE)
     private Date createAt;

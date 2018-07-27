@@ -14,7 +14,7 @@
                 <a th:href="@{'/cliente/ver/' + ${paciente.cliente.id}}" class="btn btn-light btn-xs">&laquo; volver</a>
             </h4>
 
-            <img th:if="${#strings.length(paciente.foto) > 0}" class="img-thumbnail rounded float-left"
+            <img th:if="${not #lists.isEmpty(paciente.foto)}" class="img-thumbnail rounded float-left"
                  style="max-width: 25%;" th:src="@{'/paciente/uploads/'+${paciente.foto}}" th:alt="${paciente.foto}">
 
             <ul class="list-group my-2">
@@ -24,6 +24,7 @@
                 <li class="list-group-item" th:text="'Fecha Fallecimiento: ' + ${paciente.fechaFallecimiento}"></li>
                 <li class="list-group-item" th:text="'Sexo: ' + ${paciente.sexo}"></li>
                 <li class="list-group-item" th:text="'Castrado: ' + ${paciente.castrado}"></li>
+                <li class="list-group-item" th:text="'Fecha de ingreso Sistema: ' + ${paciente.createAt}"></li>
             </ul>
 
 
