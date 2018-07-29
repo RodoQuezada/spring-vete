@@ -11,8 +11,6 @@ import java.util.Date;
 @Table(name = "pacientes")
 public class Paciente implements Serializable {
 
-    public static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -131,4 +129,6 @@ public class Paciente implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public static final long serialVersionUID = 1L;
 }

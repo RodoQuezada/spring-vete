@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "clientes")
 public class Cliente implements Serializable {
 
-    public static final long serialVersionUID = 1L;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -146,4 +146,7 @@ public class Cliente implements Serializable {
     public void agregarPaciente(Paciente paciente){
         pacientes.add(paciente);
     }
+
+
+    public static final long serialVersionUID = 1L;
 }
