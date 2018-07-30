@@ -25,6 +25,9 @@
                 <li class="list-group-item" th:text="'Sexo: ' + ${paciente.sexo}"></li>
                 <li class="list-group-item" th:text="'Castrado: ' + ${paciente.castrado}"></li>
                 <li class="list-group-item" th:text="'Fecha de ingreso Sistema: ' + ${paciente.createAt}"></li>
+                <li class="list-group-item" th:text="'Especie: ' + ${paciente.raza.especie.nombre}"></li>
+                <li class="list-group-item" th:text="'Raza: ' + ${paciente.raza.nombre}"></li>
+                <li class="list-group-item" th:text="'Codigo Chip: ' + ${paciente.codigoChip}"></li>
             </ul>
 
 

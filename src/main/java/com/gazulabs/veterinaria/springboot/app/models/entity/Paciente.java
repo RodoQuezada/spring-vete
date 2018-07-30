@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "pacientes")
@@ -39,6 +40,12 @@ public class Paciente implements Serializable {
     private Boolean castrado;
 
     private String foto;
+
+    private Long especieIdTemporal;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Raza raza;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Cliente cliente;
@@ -128,6 +135,22 @@ public class Paciente implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Raza getRaza() {
+        return raza;
+    }
+
+    public void setRaza(Raza raza) {
+        this.raza = raza;
+    }
+
+    public Long getEspecieIdTemporal() {
+        return especieIdTemporal;
+    }
+
+    public void setEspecieIdTemporal(Long especieIdTemporal) {
+        this.especieIdTemporal = especieIdTemporal;
     }
 
     public static final long serialVersionUID = 1L;

@@ -10,15 +10,9 @@
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
 
-            <h4 class="card-title">
-                <a class="btn btn-light btn-xs" th:href="@{'/cliente/ver/' + ${paciente.cliente.id}}"
-                   th:text="'&laquo; volver'"></a>
-            </h4>
-
             <form th:action="@{/paciente/form/}" th:object="${paciente}" method="post"  enctype="multipart/form-data">
-
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" th:text="'Descrición'"></label>
+                    <label class="col-sm-2 col-form-label" th:text="'Nombre Cliente: '"></label>
                     <div class="col-sm-6">
                         <input class="form-control"
                                th:value="${paciente.cliente.nombre} + ' '+ ${paciente.cliente.apellido_paterno}"
@@ -77,21 +71,47 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="castrado" class="col-sm-2 col-form-label">Castrado:</label>
+                    <label for="especie" class="col-sm-2 col-form-label">Especie:</label>
                     <div class="col-sm-6">
-                        <input id="castrado" type="checkbox" th:field="*{castrado}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" />
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('castrado')}"
-                               th:errors="*{castrado}"></small>
+                        <select id="especie" name="especie" class="form-control custom-select" th:field="*{raza.especie.id}" onchange="miFuncion()" >
+                            <option value="0" th:text="'Seleccione Especie'"></option>
+                            <option th:each="especie : ${lstEspecies}"
+                                    th:value="${especie.id}"
+                                    th:text="${especie.nombre}">
+                            </option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="file" class="col-sm-2 col-form-label">Foto</label>
+                    <label for="raza" class="col-sm-2 col-form-label">Raza:</label>
+                    <div class="col-sm-6">
+                        <select id="raza" name="raza" class="form-control custom-select" th:field="*{raza.id}" >
+                            <option value="0" th:text="'Seleccione Raza'"></option>
+                            <option th:fragment="listaDeRazasFiltrada"
+                                    th:each="raza : ${listaRazas}"
+                                    th:value="${raza.id}"
+                             th:text="${raza.nombre} + ' (Color: ' +  ${raza.color} + ')' "> </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="file" class="col-sm-2 col-form-label">Foto:</label>
                     <div class="col-sm-6">
                         <input id="file" type="file" name="file" class="form-control">
                     </div>
 
+                </div>
+
+                <div class="form-group row align-baseline">
+                    <label for="castrado" class="col-sm-2 col-form-label">Castrado:</label>
+                    <div class="col-sm-6">
+                        <input id="castrado" type="checkbox" th:field="*{castrado}" class="custom-control custom-checkbox"
+                               th:errorclass="'form-control alert-danger'" />
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('castrado')}"
+                               th:errors="*{castrado}"></small>
+                    </div>
                 </div>
 
                 <div class="form-group row">
@@ -102,11 +122,23 @@
                 </div>
 
             </form>
+
+            <h4 class="card-title">
+                <a class="btn btn-light btn-xs" th:href="@{'/cliente/ver/' + ${paciente.cliente.id}}"
+                   th:text="'&laquo; volver'"></a>
+            </h4>
         </div>
     </div>
 </div>
 
+<script language="JavaScript" type="text/javascript">
+    function miFuncion() {
+        var esp = document.getElementById("especie");
+        var especieId = esp.options[esp.selectedIndex].value;
+        var url = '/paciente/cargarlistas/' + especieId;
+        $("#raza").load(url);
+    }
+</script>
 <footer th:replace="layout/layout :: footer"></footer>
-
 </body>
 </html>

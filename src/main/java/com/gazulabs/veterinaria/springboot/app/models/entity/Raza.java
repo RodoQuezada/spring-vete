@@ -3,6 +3,7 @@ package com.gazulabs.veterinaria.springboot.app.models.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "tablas")
@@ -24,6 +25,8 @@ public class Raza implements Serializable {
     @Column(name = "color_secundario")
     private String colorSecundario;
 
+    @OneToMany(mappedBy = "raza", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Paciente> lstPacientes;
 
     public Long getId() {
         return id;
@@ -63,6 +66,14 @@ public class Raza implements Serializable {
 
     public void setColorSecundario(String colorSecundario) {
         this.colorSecundario = colorSecundario;
+    }
+
+    public List<Paciente> getLstPacientes() {
+        return lstPacientes;
+    }
+
+    public void setLstPacientes(List<Paciente> lstPacientes) {
+        this.lstPacientes = lstPacientes;
     }
 
     public static final long serialVersionUID = 1L;
