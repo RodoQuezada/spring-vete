@@ -16,7 +16,7 @@
 
             <ul class="list-group">
                 <li class="list-group-item" th:text="'Rut: ' +${cliente.rut}"></li>
-                <li class="list-group-item" th:text="'Nombre: ' +${cliente.nombre}+' '+${cliente.apellido_paterno}+' '+${cliente.apellido_materno}"></li>
+                <li class="list-group-item" th:text="'Nombre: ' +${cliente.nombre}+' '+${cliente.apellidoPaterno}+' '+${cliente.apellidoMaterno}"></li>
                 <li class="list-group-item" th:text="'Dirección: ' +${cliente.direccion}"></li>
                 <li class="list-group-item" th:text="'Telefono: ' +${cliente.telefono}"></li>
                 <li class="list-group-item" th:text="'E-mail: ' +${cliente.email}"></li>
@@ -25,7 +25,7 @@
             </ul>
 
             <div th:if="${#lists.isEmpty(cliente.pacientes)}" class="alert alert-info my-4"
-                 th:text="'No hay registro de pacientes para el cliente '+ ${cliente.nombre}+ ' '+ ${cliente.apellido_paterno}"></div>
+                 th:text="'No hay registro de pacientes para el cliente '+ ${cliente.nombre}+ ' '+ ${cliente.apellidoPaterno}"></div>
             <table th:if="${not #lists.isEmpty(cliente.pacientes)}" class="table table-bordered table-striped my-4">
                 <thead class="thead-inverse">
                 <tr>

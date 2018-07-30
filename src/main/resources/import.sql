@@ -10,15 +10,15 @@ INSERT INTO especies(nombre) VALUES ('Aves');
 INSERT INTO especies(nombre) VALUES ('Reptiles');
 INSERT INTO especies(nombre) VALUES ('Paces');
 
-insert into tablas (color, color_secundario, especie_id, nombre) values ('Amarillo','Negro', 1, 'Pug');
-insert into tablas (color, color_secundario, especie_id, nombre) values ('Negro','Amarillo', 1, 'Pastor Aleman');
-insert into tablas (color, color_secundario, especie_id, nombre) values ('Blanco','', 1, 'Poodle');
-insert into tablas (color, color_secundario, especie_id, nombre) values ('Negro','', 1, 'Poodle');
-insert into tablas (color, color_secundario, especie_id, nombre) values ('Amarillo','Blanco', 1, 'Schnauzer');
+insert into razas (color, color_secundario, especie_id, nombre) values ('Amarillo','Negro', 1, 'Pug');
+insert into razas (color, color_secundario, especie_id, nombre) values ('Negro','Amarillo', 1, 'Pastor Aleman');
+insert into razas (color, color_secundario, especie_id, nombre) values ('Blanco','', 1, 'Poodle');
+insert into razas (color, color_secundario, especie_id, nombre) values ('Negro','', 1, 'Poodle');
+insert into razas (color, color_secundario, especie_id, nombre) values ('Amarillo','Blanco', 1, 'Schnauzer');
 
-insert into tablas (color, color_secundario, especie_id, nombre) values ('Amarillo','Negro', 2, 'Gato uno');
-insert into tablas (color, color_secundario, especie_id, nombre) values ('Negro','Amarillo', 2, 'Gato dos');
-insert into tablas (color, color_secundario, especie_id, nombre) values ('Blanco','', 2, 'Gato tres');
-insert into tablas (color, color_secundario, especie_id, nombre) values ('Negro','', 2, 'Gato cuatro');
+insert into razas (color, color_secundario, especie_id, nombre) values ('Amarillo','Negro', 2, 'Gato uno');
+insert into razas (color, color_secundario, especie_id, nombre) values ('Negro','Amarillo', 2, 'Gato dos');
+insert into razas (color, color_secundario, especie_id, nombre) values ('Blanco','', 2, 'Gato tres');
+insert into razas (color, color_secundario, especie_id, nombre) values ('Negro','', 2, 'Gato cuatro');
 
 

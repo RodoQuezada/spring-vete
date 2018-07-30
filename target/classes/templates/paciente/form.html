@@ -15,7 +15,7 @@
                     <label class="col-sm-2 col-form-label" th:text="'Nombre Cliente: '"></label>
                     <div class="col-sm-6">
                         <input class="form-control"
-                               th:value="${paciente.cliente.nombre} + ' '+ ${paciente.cliente.apellido_paterno}"
+                               th:value="${paciente.cliente.nombre} + ' '+ ${paciente.cliente.apellidoPaterno}"
                                disabled="disabled"/>
                     </div>
                 </div>
@@ -113,8 +113,6 @@
                                th:errors="*{castrado}"></small>
                     </div>
                 </div>
-
-
 
                 <div class="form-group row">
                     <div class="col-sm-6">

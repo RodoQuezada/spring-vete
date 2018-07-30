@@ -23,10 +23,15 @@ public class Cliente implements Serializable {
     private Long rut;
     @NotEmpty
     private String nombre;
+
     @NotEmpty
-    private String apellido_paterno;
+    @Column(name = "apellido_paterno")
+    private String apellidoPaterno;
+
     @NotEmpty
-    private String apellido_materno;
+    @Column(name = "apellido_materno")
+    private String apellidoMaterno;
+
     @NotEmpty
     private String direccion;
     @NotNull
@@ -79,20 +84,20 @@ public class Cliente implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getApellido_paterno() {
-        return apellido_paterno;
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
     }
 
-    public void setApellido_paterno(String apellido_paterno) {
-        this.apellido_paterno = apellido_paterno;
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
     }
 
-    public String getApellido_materno() {
-        return apellido_materno;
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
     }
 
-    public void setApellido_materno(String apellido_materno) {
-        this.apellido_materno = apellido_materno;
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
     }
 
     public String getDireccion() {

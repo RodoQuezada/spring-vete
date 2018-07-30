@@ -99,7 +99,7 @@ public class ClienteController {
             return "redirect:/cliente/listar";
         }
         model.put("cliente", cliente);
-        model.put("titulo", "Detalle cliente: " + cliente.getNombre() + " " + cliente.getApellido_paterno() + " " + cliente.getApellido_materno());
+        model.put("titulo", "Detalle cliente: " + cliente.getNombre() + " " + cliente.getApellidoPaterno() + " " + cliente.getApellidoMaterno());
         return "cliente/ver";
     }
 
