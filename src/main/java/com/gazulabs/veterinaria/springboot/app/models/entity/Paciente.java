@@ -23,13 +23,13 @@ public class Paciente implements Serializable {
     private Date createAt;
 
     @Column(name = "fecha_nacimiento")
-    @DateTimeFormat(pattern="yyyy-mm-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
 
     @Column(name = "fecha_fallecimiento")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern="yyyy-mm-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date fechaFallecimiento;
 
     @Column(name = "codigo_chip")
@@ -43,18 +43,18 @@ public class Paciente implements Serializable {
 
     private Long especieIdTemporal;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Raza raza;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Cliente cliente;
 
+    @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FichaAtencion> fichas;
+
     @PrePersist
     public void prePersist(){
         createAt = new Date();
-        fechaNacimiento = new Date();
-        fechaFallecimiento = new Date();
     }
 
     public Long getId() {
@@ -151,6 +151,14 @@ public class Paciente implements Serializable {
 
     public void setEspecieIdTemporal(Long especieIdTemporal) {
         this.especieIdTemporal = especieIdTemporal;
+    }
+
+    public List<FichaAtencion> getFichas() {
+        return fichas;
+    }
+
+    public void setFichas(List<FichaAtencion> fichas) {
+        this.fichas = fichas;
     }
 
     public static final long serialVersionUID = 1L;

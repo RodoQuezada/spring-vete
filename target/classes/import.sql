@@ -21,4 +21,10 @@ insert into razas (color, color_secundario, especie_id, nombre) values ('Negro',
 insert into razas (color, color_secundario, especie_id, nombre) values ('Blanco','', 2, 'Gato tres');
 insert into razas (color, color_secundario, especie_id, nombre) values ('Negro','', 2, 'Gato cuatro');
 
+insert into tipos_usuarios(nombre) values ('Medico Cirujano');
+insert into tipos_usuarios(nombre) values ('Anestesista');
+insert into tipos_usuarios(nombre) values ('Secretario');
+
+
+insert into usuarios (apellido_materno, apellido_paterno, nombre, tipo_usuario_id) values ('Bailly', 'Figueroa', 'Carolina', 1);
 

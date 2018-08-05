@@ -7,10 +7,8 @@
               th:href="@{/css/bootstrap.min.css}"/>
         <link rel="stylesheet"
               th:href="@{/css/jquery-ui.min.css}"/>
-
     </head>
     <body>
-
         <header th:fragment="header">
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
                 <a class="navbar-brand" th:href="@{/}" href="#">Veterinaria</a>
@@ -22,28 +20,42 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href="#about"
-                               th:href="@{/cliente/listar}">Cliente
+                               th:href="@{/cliente/listar}">Clientes
                             </a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="#about"
-                               th:href="@{/especie/form}">Especie
+                               th:href="@{/especie/form}">Especies
                             </a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="#about"
-                               th:href="@{/raza/form}">Raza
+                               th:href="@{/raza/form}">Razas
                             </a>
                         </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#about"
+                               th:href="@{/tipo-usuario/form}">Tipos Usuarios
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#about"
+                               th:href="@{/usuario/form}">Usuarios
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#about"
+                               th:href="@{/ficha-atencion/lista-fichas-atencion}">Fichas de atención
+                            </a>
+                        </li>
+
                     </ul>
                     <!--
                     <ul class="navbar-nav navbar-right">
                         <li>
                             <a class="btn btn-outline-primary" th:href="@{/login}">Sign In</a>
                         </li>
-
                     </ul> -->
-
                 </div>
             </nav>
 
@@ -51,10 +63,7 @@
             <div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
             <div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
             <div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
-
         </header>
-
-
 
         <footer th:fragment="footer">
             <br/>

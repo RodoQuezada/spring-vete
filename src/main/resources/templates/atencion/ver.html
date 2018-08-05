@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item" th:text="${atencion.id}"></li>
+                <li class="list-group-item" th:text="${atencion.peso}"></li>
+                <li class="list-group-item" th:text="${atencion.temperatura}"></li>
+                <li class="list-group-item" th:text="${atencion.signosVitales}"></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+</html>

@@ -53,5 +53,10 @@ public class ClienteServiceImpl implements IClienteService {
         return clienteDao.findAll(pageable);
     }
 
+    @Override
+    public Cliente findListaPacientes(Long id) {
+        return clienteDao.findListaPacientes(id);
+    }
+
 
 }

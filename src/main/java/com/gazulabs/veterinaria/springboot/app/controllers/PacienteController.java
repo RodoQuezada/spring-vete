@@ -52,16 +52,14 @@ public class PacienteController {
 
     private static List<Raza> listaRazas = new ArrayList<Raza>();
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private static final String TITULO_MANTENEDOR = "Agregar Paciente";
-
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @GetMapping(value = "/uploads/{filename:.+}")
     public ResponseEntity<Resource> verFoto(@PathVariable String filename) throws MalformedURLException {
         Resource recurso = null;
-        log.info("entra a controlador verFoto");
+        logger.info("entra a controlador verFoto");
 
             recurso = uploadFileService.load(filename);
 

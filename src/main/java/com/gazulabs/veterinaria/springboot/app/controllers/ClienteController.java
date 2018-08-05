@@ -27,6 +27,9 @@ public class ClienteController {
     @Autowired
     private IClienteService clienteService;
 
+    private static final String TITULO_MANTENEDOR = "Agregar Cliente";
+
+
     @GetMapping("/listar")
     public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 
@@ -51,7 +54,7 @@ public class ClienteController {
     @PostMapping("/form")
     public String guardar(@Valid Cliente cliente, BindingResult result, Model model, RedirectAttributes flash, SessionStatus status) {
         if (result.hasErrors()) {
-            model.addAttribute("titulo", "Crear Cliente");
+            model.addAttribute("titulo", TITULO_MANTENEDOR);
             return "cliente/form";
         }
 

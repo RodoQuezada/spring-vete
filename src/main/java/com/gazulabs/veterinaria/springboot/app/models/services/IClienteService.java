@@ -21,7 +21,7 @@ public interface IClienteService {
 
     public Page<Cliente> findAll(Pageable pageable);
 
-
+    public Cliente findListaPacientes(Long id);
 
 
 }

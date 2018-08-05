@@ -23,6 +23,9 @@ public class Usuario implements Serializable {
     @Column(name = "apellido_materno")
     private String apellidoMaterno;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TipoUsuario tipoUsuario;
+
     public Long getId() {
         return id;
     }
@@ -53,6 +56,14 @@ public class Usuario implements Serializable {
 
     public void setApellidoMaterno(String apellidoMaterno) {
         this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 
     public static final long serialVersionUID = 1L;
