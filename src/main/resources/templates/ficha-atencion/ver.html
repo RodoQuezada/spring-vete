@@ -10,16 +10,16 @@
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
 
-            <h4 class="card-title">
-                <a class="btn btn-primary btn-xs" th:href="@{'/atencion/form/' + ${fichaAtencion.id}}" th:text="'agregar atención'"></a>
-            </h4>
-
             <ul class="list-group">
+                <li class="list-group-item" th:text="'Nombre Cliente: '+ ${fichaAtencion.paciente.cliente.nombre} + ' '+
+               ${fichaAtencion.paciente.cliente.apellidoPaterno}"></li>
+                <li class="list-group-item" th:text="'Nombre Paciente: '+ ${fichaAtencion.paciente.nombre}"></li>
+                <li class="list-group-item" th:text="'Raza Paciente: '+ ${fichaAtencion.paciente.raza.nombre}"></li>
                 <li class="list-group-item" th:text="'Fecha Atención: '+ ${fichaAtencion.fechaAtencion}"></li>
-                <li class="list-group-item" th:text="'Fecha Atención: '+ ${fichaAtencion.motivo}"></li>
-                <li class="list-group-item" th:text="'Fecha Atención: '+ ${fichaAtencion.diagnostico}"></li>
+                <li class="list-group-item" th:text="'Motivo: '+ ${fichaAtencion.motivo}"></li>
+                <li class="list-group-item" th:text="'Diagnostico: '+ ${fichaAtencion.diagnostico}"></li>
                 <li class="list-group-item" th:text="'Fecha Atención: '+ ${fichaAtencion.estadoAtencion}"></li>
-                <li class="list-group-item" th:text="'Cliente '"></li>
+
             </ul>
 
             <div th:if="${#lists.isEmpty(fichaAtencion.atenciones)}" class="alert alert-info my-4"
@@ -28,25 +28,31 @@
                 <p class="card-header">Lista de atenciones</p>
                 <thead class="thead-light">
                 <tr>
-                    <th>id</th>
+                    <th>#</th>
                     <th>fecha</th>
                     <th>peso</th>
                     <th>temperatura</th>
                     <th>signos vitales</th>
+                    <th>responsable</th>
                     <th>ver</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr th:each="atencion : ${fichaAtencion.atenciones}">
                         <td th:text="${atencion.id}"></td>
-                        <td th:text="${atencion.createAt}"></td>
+                        <td th:text="${#dates.format(atencion.createAt,'dd-MM-yyyy HH:mm')}"></td>
                         <td th:text="${atencion.peso}"></td>
                         <td th:text="${atencion.temperatura}"></td>
                         <td th:text="${atencion.signosVitales}"></td>
+                        <td th:text="${atencion.usuario.nombre} +' '+ ${atencion.usuario.apellidoPaterno}"></td>
                         <td><a class="btn btn-info btn-xs" th:href="@{'/atencion/ver/' + ${atencion.id}}" th:text="'ver'"></a> </td>
                     </tr>
                 </tbody>
             </table>
+
+            <h4 class="card-title">
+                <a class="btn btn-primary btn-xs" th:href="@{'/atencion/form/' + ${fichaAtencion.id}}" th:text="'agregar atención'"></a>
+            </h4>
         </div>
     </div>
 </div>

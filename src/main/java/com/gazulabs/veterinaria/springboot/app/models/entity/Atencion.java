@@ -1,5 +1,7 @@
 package com.gazulabs.veterinaria.springboot.app.models.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -18,13 +20,18 @@ public class Atencion implements Serializable {
     private double signosVitales;
 
     @Column(name = "create_at")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date createAt;
 
     private String comentario;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private FichaAtencion fichaAtencion;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @PrePersist
     public void prePersist(){
@@ -86,6 +93,14 @@ public class Atencion implements Serializable {
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public static final long serialVersionUID = 1L;

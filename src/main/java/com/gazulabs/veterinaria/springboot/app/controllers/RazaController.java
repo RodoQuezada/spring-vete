@@ -52,7 +52,10 @@ public class RazaController {
             if (raza.getNombre().isEmpty() || raza.getNombre().length() < 2) {
                 flash.addFlashAttribute("error", "Nombre de raza no es valido");
                 return "redirect:/raza/form";
-            } else {
+            } else if (raza.getEspecie() == null){
+                flash.addFlashAttribute("error", "Debe agregar una especie");
+                return "redirect:/raza/form";
+            }else{
                 razaService.save(raza);
             }
         } catch (Exception e) {

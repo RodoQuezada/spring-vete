@@ -2,8 +2,10 @@ package com.gazulabs.veterinaria.springboot.app.controllers;
 
 import com.gazulabs.veterinaria.springboot.app.models.entity.Atencion;
 import com.gazulabs.veterinaria.springboot.app.models.entity.FichaAtencion;
+import com.gazulabs.veterinaria.springboot.app.models.entity.Usuario;
 import com.gazulabs.veterinaria.springboot.app.models.services.IAtencionService;
 import com.gazulabs.veterinaria.springboot.app.models.services.IFichaAtencionService;
+import com.gazulabs.veterinaria.springboot.app.models.services.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,15 +29,20 @@ public class AtencionController {
     @Autowired
     private IFichaAtencionService fichaAtencionService;
 
+    @Autowired
+    private IUsuarioService usuarioService;
+
     private static final String TITULO_MANTENEDOR = "Agregar Atención";
 
     @GetMapping("/form/{fichaId}")
     public String crear(@PathVariable (value = "fichaId") Long fichaId, Map<String, Object> model,
                         RedirectAttributes flash){
         FichaAtencion ficha = fichaAtencionService.findById(fichaId);
+        List<Usuario> usuarios = usuarioService.findAll();
         Atencion atencion = new Atencion();
         atencion.setFichaAtencion(ficha);
         model.put("titulo", TITULO_MANTENEDOR);
+        model.put("usuarios", usuarios);
         model.put("ficha",ficha);
         model.put("atencion", atencion);
         return "atencion/form";

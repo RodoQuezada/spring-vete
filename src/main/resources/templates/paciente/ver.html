@@ -10,14 +10,6 @@
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
 
-            <h4 class="card-title">
-                <a th:href="@{'/cliente/ver/' + ${paciente.cliente.id}}" class="btn btn-light btn-xs">&laquo; volver</a>
-            </h4>
-
-            <h4 class="card-title">
-                <a th:href="@{'/ficha-atencion/form/' +  ${paciente.id}}" class="btn btn-primary btn-xs">crear atención</a>
-            </h4>
-
             <img th:if="${not #lists.isEmpty(paciente.foto)}" class="img-thumbnail rounded float-left"
                  style="max-width: 25%;" th:src="@{'/paciente/uploads/'+${paciente.foto}}" th:alt="${paciente.foto}">
 
@@ -26,8 +18,10 @@
                 <li class="list-group-item" th:text="'Nombre Mascota: ' + ${paciente.nombre}"></li>
                 <li class="list-group-item" th:text="'Fecha Nacimiento: ' + ${paciente.fechaNacimiento}"></li>
                 <li class="list-group-item" th:text="'Fecha Fallecimiento: ' + ${paciente.fechaFallecimiento}"></li>
-                <li class="list-group-item" th:text="'Sexo: ' + ${paciente.sexo}"></li>
-                <li class="list-group-item" th:text="'Castrado: ' + ${paciente.castrado}"></li>
+                <li class="list-group-item"
+                    th:text="'Sexo: ' + ${paciente.sexo == 'm' ? 'Masculino' : 'Femenino'}"></li>
+                <li class="list-group-item"
+                    th:text="'Castrado: ' + ${paciente.castrado == 'true' ? 'castrado' : 'no castrado'}"></li>
                 <li class="list-group-item" th:text="'Fecha de ingreso Sistema: ' + ${paciente.createAt}"></li>
                 <li class="list-group-item" th:text="'Especie: ' + ${paciente.raza.especie.nombre}"></li>
                 <li class="list-group-item" th:text="'Raza: ' + ${paciente.raza.nombre}"></li>
@@ -36,14 +30,15 @@
 
             <div th:if="${#lists.isEmpty(paciente.fichas)}" class="alert alert-info my-4"
                  th:text="'Paciente ' + ${paciente.nombre}+ ' no posee atenciones registradas ' "></div>
-            <table th:if="${not #lists.isEmpty(paciente.fichas)}" class="table table-bordered table-striped my-6">
+            <table th:if="${not #lists.isEmpty(paciente.fichas)}" class="table table-bordered table-striped my-4">
                 <p class="card-header"> Lista de Atenciones </p>
                 <thead class="thead-light">
                 <tr>
-                    <th>id</th>
+                    <th>#</th>
                     <th>fecha</th>
                     <th>motivo</th>
                     <th>estado</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,12 +46,25 @@
                     <td th:text="${fichaAtencion.id}"></td>
                     <td th:text="${fichaAtencion.fechaAtencion}"></td>
                     <td th:text="${fichaAtencion.motivo}"></td>
-                    <td th:text="${fichaAtencion.estadoAtencion}"></td>
-                    <td><a class="btn btn-info btn-xs" th:href="@{'/ficha-atencion/ver/' + ${fichaAtencion.id}}" th:text="'ver'">
-                    </a> </td>
+                    <td th:text="${fichaAtencion.estadoAtencion == 'true' ? 'atendido' : 'terminado'}"></td>
+                    <td><a class="btn btn-info btn-xs" th:href="@{'/ficha-atencion/ver/' + ${fichaAtencion.id}}"
+                           th:text="'ver'">
+                    </a></td>
                 </tr>
                 </tbody>
             </table>
+
+            <div class="card-group">
+                <h4 class="card-title">
+                    <a th:href="@{'/cliente/ver/' + ${paciente.cliente.id}}" class="btn btn-light btn-xs">&laquo;
+                        volver</a>
+                </h4>
+
+                <h4 class="card-title">
+                    <a th:href="@{'/ficha-atencion/form/' +  ${paciente.id}}" class="btn btn-primary btn-xs">crear ficha
+                        de atención</a>
+                </h4>
+            </div>
         </div>
     </div>
 </div>

@@ -28,6 +28,9 @@ public class FichaAtencion implements Serializable {
     @OneToMany(mappedBy = "fichaAtencion", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     List<Atencion> atenciones;
 
+
+
+
     @PrePersist
     public void prePersist() {
         fechaAtencion = new Date();

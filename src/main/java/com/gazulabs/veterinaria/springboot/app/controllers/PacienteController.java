@@ -61,7 +61,7 @@ public class PacienteController {
         Resource recurso = null;
         logger.info("entra a controlador verFoto");
 
-            recurso = uploadFileService.load(filename);
+        recurso = uploadFileService.load(filename);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
@@ -70,9 +70,9 @@ public class PacienteController {
 
     @GetMapping("/form/{clienteId}")
     public String crear(@PathVariable(value = "clienteId") Long clienteId, Map<String, Object> model,
-                        RedirectAttributes flash){
+                        RedirectAttributes flash) {
         Cliente cliente = clienteService.findOneById(clienteId);
-        if (cliente.getId() == null || cliente.getId() < 1){
+        if (cliente.getId() == null || cliente.getId() < 1) {
             flash.addFlashAttribute("error", "El cliente no existe en la BBDD");
             return "redirect:/cliente/listar";
         }
@@ -81,7 +81,7 @@ public class PacienteController {
         List<Especie> lstEspecies = especieService.findAll();
         idClienteTemporal = cliente.getId();
         model.put("paciente", paciente);
-        model.put("titulo",TITULO_MANTENEDOR);
+        model.put("titulo", TITULO_MANTENEDOR);
         model.put("lstEspecies", lstEspecies);
         model.put("listaRazas", listaRazas);
         return "paciente/form";
@@ -89,16 +89,25 @@ public class PacienteController {
 
     @PostMapping("/form")
     public String guardar(@RequestParam("file") MultipartFile foto, @Valid Paciente paciente, Model model, BindingResult result, RedirectAttributes flash, SessionStatus status) throws IOException {
-        if (result.hasErrors()){
-            model.addAttribute("titulo","Agregar paciente");
+        if (result.hasErrors()) {
+            flash.addFlashAttribute("error", "Error");
+            model.addAttribute("titulo", "Agregar paciente");
             return "paciente/form";
         }
-        if (!foto.isEmpty()){
+        if (!foto.isEmpty()) {
             String uniqueFilename = null;
             uniqueFilename = uploadFileService.copy(foto);
-            flash.addFlashAttribute("info","Has subido correctamente '" + uniqueFilename + "'");
+            flash.addFlashAttribute("info", "Has subido correctamente '" + uniqueFilename + "'");
             paciente.setFoto(uniqueFilename);
         }
+
+        logger.info("---- Raza ---> " + paciente.getRaza() + " ----- " + paciente.getRaza().getNombre());
+      /*  if (paciente.getRaza().getNombre() == null) {
+            flash.addFlashAttribute("error", "Raza no ingresada");
+            model.addAttribute("titulo", "Agregar paciente");
+            return "paciente/form";
+        }*/
+
         pacienteService.save(paciente);
         status.setComplete();
         flash.addFlashAttribute("success", "Paciente agregado con éxito");
@@ -106,13 +115,13 @@ public class PacienteController {
     }
 
     @GetMapping("/ver/{id}")
-    public String ver(@PathVariable (value = "id")Long id,Model model, RedirectAttributes flash){
-            Paciente paciente = pacienteService.findById(id);
-            if (paciente == null){
-                flash.addFlashAttribute("error","Paciente no existe en la BBDD");
-                return "redirect:/cliente/listar";
-            }
-        model.addAttribute("paciente",paciente);
+    public String ver(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash) {
+        Paciente paciente = pacienteService.findById(id);
+        if (paciente == null) {
+            flash.addFlashAttribute("error", "Paciente no existe en la BBDD");
+            return "redirect:/cliente/listar";
+        }
+        model.addAttribute("paciente", paciente);
         model.addAttribute("titulo", "Paciente: ".concat(paciente.getNombre()));
         return "paciente/ver";
     }
@@ -120,22 +129,22 @@ public class PacienteController {
     //implementación del dropdownlist en cascada.
     @GetMapping("/agregar-raza")
     public @ResponseBody
-    List<Raza> findAllRaza(@RequestParam (value = "especieId") Long especieId){
+    List<Raza> findAllRaza(@RequestParam(value = "especieId") Long especieId) {
         Especie especie = especieService.findById(especieId);
         List<Raza> lstRazaFiltradaPorEspecie = new ArrayList<>();
-        for (Raza r: razaService.findAll()){
-            if (especie.getId() == r.getEspecie().getId()){
+        for (Raza r : razaService.findAll()) {
+            if (especie.getId() == r.getEspecie().getId()) {
                 lstRazaFiltradaPorEspecie.add(r);
             }
         }
         return lstRazaFiltradaPorEspecie;
     }
 
-    public List<Raza> listadeRazas(@PathVariable(value = "especieId") Long especieId){
+    public List<Raza> listadeRazas(@PathVariable(value = "especieId") Long especieId) {
         Especie especie = especieService.findById(especieId);
         List<Raza> lstRazaFiltradaPorEspecie = new ArrayList<>();
-        for (Raza r: razaService.findAll()){
-            if (especie.getId() == r.getEspecie().getId()){
+        for (Raza r : razaService.findAll()) {
+            if (especie.getId() == r.getEspecie().getId()) {
                 lstRazaFiltradaPorEspecie.add(r);
             }
         }
@@ -145,39 +154,37 @@ public class PacienteController {
 
     //Esto se puede mejorar con @Query para hacer solo una llamada.
     @GetMapping("/cargarlistas/{id}")
-    public String cargarListaRazas (@PathVariable (value = "id") Long id, Model model){
+    public String cargarListaRazas(@PathVariable(value = "id") Long id, Model model) {
         logger.info("-- Entra a cargar lista de raza ");
         List<Raza> lstRaza = razaService.findAll();
         listaRazas.clear();
-        for(Raza r : lstRaza){
-            if (r.getEspecie().getId() == id){
+        for (Raza r : lstRaza) {
+            if (r.getEspecie().getId() == id) {
                 listaRazas.add(r);
             }
         }
-        model.addAttribute("listaRazas",listaRazas);
+        model.addAttribute("listaRazas", listaRazas);
         return "redirect:/paciente/form/ajax/";
     }
 
     @GetMapping("/form/ajax/")
     public String experimento(Map<String, Object> model,
-                              RedirectAttributes flash){
+                              RedirectAttributes flash) {
         logger.info("-- Cambiar a experimento");
         Cliente cliente = clienteService.findOneById(idClienteTemporal);
-        if (cliente == null){
-            flash.addFlashAttribute("Error" , "El cliente no existe en la BBDD");
+        if (cliente == null) {
+            flash.addFlashAttribute("Error", "El cliente no existe en la BBDD");
             return "redirect:/listar";
         }
         Paciente paciente = new Paciente();
         paciente.setCliente(cliente);
         List<Especie> lstEspecies = especieService.findAll();
-        model.put("listaRazas",listaRazas);
+        model.put("listaRazas", listaRazas);
         model.put("lstEspecies", lstEspecies);
         model.put("paciente", paciente);
-        model.put("titulo",TITULO_MANTENEDOR);
+        model.put("titulo", TITULO_MANTENEDOR);
         return "paciente/form::listaDeRazasFiltrada";
     }
-
-
 
 
 }

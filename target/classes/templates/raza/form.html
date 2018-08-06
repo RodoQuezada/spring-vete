@@ -15,7 +15,7 @@
                 <div class="form-group row">
                     <label for="nombre" class="col-sm-2 col-form-label">Especie</label>
                     <div class="col-sm-6">
-                        <select class="form-control" th:field="*{especie.id}">
+                        <select class="form-control" th:field="*{especie.id}" required="true">
                             <option th:each="especie : ${lstEspecies}"
                                     th:value="${especie.id}"
                                     th:text="${especie.nombre}">
@@ -37,7 +37,7 @@
                     <label for="color" class="col-sm-2 col-form-label">Color</label>
                     <div class="col-sm-6">
                         <input id="color" type="text" th:field="*{color}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" required="true"/>
+                               th:errorclass="'form-control alert-danger'" required="required"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('color')}"
                                th:errors="*{color}"></small>
                     </div>
@@ -65,7 +65,7 @@
             <table class="table table-bordered table-striped my-4">
                 <thead class="thead-light">
                 <tr>
-                    <th>id</th>
+                    <th>#</th>
                     <th>nombre</th>
                     <th>color</th>
                     <th>color secundario</th>

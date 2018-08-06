@@ -27,4 +27,3 @@ insert into tipos_usuarios(nombre) values ('Secretario');
 
 
 insert into usuarios (apellido_materno, apellido_paterno, nombre, tipo_usuario_id) values ('Bailly', 'Figueroa', 'Carolina', 1);
-

@@ -10,10 +10,10 @@
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
             <ul class="list-group">
-                <li class="list-group-item" th:text="${atencion.id}"></li>
-                <li class="list-group-item" th:text="${atencion.peso}"></li>
-                <li class="list-group-item" th:text="${atencion.temperatura}"></li>
-                <li class="list-group-item" th:text="${atencion.signosVitales}"></li>
+                <li class="list-group-item" th:text="'#: ' + ${atencion.id}"></li>
+                <li class="list-group-item" th:text="'Peso: ' + ${atencion.peso}"></li>
+                <li class="list-group-item" th:text="'Temperatura: '+${atencion.temperatura}"></li>
+                <li class="list-group-item" th:text="'Signos Vitales: '+${atencion.signosVitales}"></li>
             </ul>
         </div>
     </div>

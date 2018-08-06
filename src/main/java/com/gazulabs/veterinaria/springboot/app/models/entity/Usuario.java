@@ -26,6 +26,9 @@ public class Usuario implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private TipoUsuario tipoUsuario;
 
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Atencion atencion;
+
     public Long getId() {
         return id;
     }
@@ -64,6 +67,14 @@ public class Usuario implements Serializable {
 
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public Atencion getAtencion() {
+        return atencion;
+    }
+
+    public void setAtencion(Atencion atencion) {
+        this.atencion = atencion;
     }
 
     public static final long serialVersionUID = 1L;
