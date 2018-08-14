@@ -16,8 +16,8 @@
                 <li class="list-group-item" th:text="'Nombre Paciente: '+ ${fichaAtencion.paciente.nombre}"></li>
                 <li class="list-group-item" th:text="'Raza Paciente: '+ ${fichaAtencion.paciente.raza.nombre}"></li>
                 <li class="list-group-item" th:text="'Motivo: '+ ${fichaAtencion.motivo}"></li>
-                <li class="list-group-item" th:text="'Diagnostico: '+ ${fichaAtencion.diagnostico == null ? 'Sin diagnostico' : fichaAtencion.diagnostico}"></li>
-                <li class="list-group-item" th:text="'Fecha Atención: '+ ${#dates.format(fichaAtencion.fechaAtencion, 'dd-MM-yyyy')}"></li>
+                <li class="list-group-item"
+                    th:text="'Fecha Atención: '+ ${#dates.format(fichaAtencion.fechaAtencion, 'dd-MM-yyyy')}"></li>
             </ul>
 
             <div th:if="${#lists.isEmpty(fichaAtencion.atenciones)}" class="alert alert-info my-4"
@@ -50,10 +50,17 @@
                 </tbody>
             </table>
 
+            <div class="card-group">
+                <h4 class="card-title">
+                    <a class="btn btn-primary btn-xs" th:href="@{'/atencion/form/' + ${fichaAtencion.id}}"
+                       th:text="'agregar atención'"></a>
+                </h4>
 
-            <h4 class="card-title">
-                <a class="btn btn-primary btn-xs" th:href="@{'/ficha-atencion/lista-sala-espera/'}" th:text="'volver'"></a>
-            </h4>
+                <h4 class="card-title">
+                    <a class="btn btn-primary btn-xs" th:href="@{'/ficha-atencion/form-diagnostico/' + ${fichaAtencion.id}}"
+                       th:text="'agregar diagnostico'"></a>
+                </h4>
+            </div>
 
         </div>
     </div>

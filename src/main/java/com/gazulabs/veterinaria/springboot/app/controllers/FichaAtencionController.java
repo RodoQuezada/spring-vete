@@ -17,6 +17,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +41,7 @@ public class FichaAtencionController {
         FichaAtencion fichaAtencion = new FichaAtencion();
         Paciente paciente = pacienteService.findById(pacienteId);
         fichaAtencion.setPaciente(paciente);
+        logger.info("--- estado atención: " + fichaAtencion.getEstadoAtencion());
         model.addAttribute("fichaAtencion", fichaAtencion);
         model.addAttribute("paciente", paciente);
         model.addAttribute("titulo",TITULO_MANTENEDOR);
@@ -63,7 +65,7 @@ public class FichaAtencionController {
         }
         status.setComplete();
         flash.addFlashAttribute("success", "Ficha de atención ingresada con exito");
-        return "redirect:/ficha-atencion/ver/" + fichaAtencion.getId();
+        return "redirect:/ficha-atencion/lista-sala-espera";
     }
 
     @GetMapping("/ver/{id}")
@@ -77,7 +79,7 @@ public class FichaAtencionController {
         return "ficha-atencion/ver";
     }
 
-    @GetMapping("lista-fichas-atencion")
+    @GetMapping("/lista-fichas-atencion")
     public String listaFichas(Model model, RedirectAttributes flash){
         List<FichaAtencion> fichas = fichaAtencionService.findAll();
         if (fichas.isEmpty()){
@@ -88,5 +90,143 @@ public class FichaAtencionController {
         model.addAttribute("titulo",TITULO_MANTENEDOR);
         return "ficha-atencion/lista-fichas-atencion";
     }
+
+    @GetMapping("/lista-sala-espera")
+    public String buscarListaEspera(Model model, RedirectAttributes flash){
+        List<FichaAtencion> listaFichasAtencionEnEspera = new ArrayList<>();
+        List<FichaAtencion> fichas = fichaAtencionService.findAll();
+        for (FichaAtencion f: fichas) {
+            if (f.getEstadoAtencion() == 'p'){
+                listaFichasAtencionEnEspera.add(f);
+            }
+        }
+        logger.info("---tamaño lista sala espera: "+listaFichasAtencionEnEspera.size());
+        model.addAttribute("fichas", listaFichasAtencionEnEspera);
+        model.addAttribute("titulo","Fichas de atenciones en espera");
+        return "ficha-atencion/lista-sala-espera";
+    }
+
+    @RequestMapping(value = "/atender/{id}")
+    public String atenderFicha(@PathVariable(value = "id") Long id, Map<String, Object> model,  RedirectAttributes flash) {
+        if (id < 0) {
+            flash.addFlashAttribute("error", "Error al consultar ficha");
+            return "/ficha-atencion/";
+        }
+        FichaAtencion fichaTemp = fichaAtencionService.findById(id);
+        fichaTemp.setEstadoAtencion('a');
+        fichaAtencionService.save(fichaTemp);
+        return "redirect:/ficha-atencion/lista-sala-espera";
+    }
+
+    @GetMapping("/lista-pacientes-atendidos")
+    public String listaPacientesEnSalaEspera(Model model, RedirectAttributes flash){
+        List<FichaAtencion> listaPacientesEnSalaEspera = new ArrayList<>();
+        List<FichaAtencion> fichas = fichaAtencionService.findAll();
+        for (FichaAtencion f: fichas) {
+            if (f.getEstadoAtencion() == 'a'){
+                listaPacientesEnSalaEspera.add(f);
+            }
+        }
+        logger.info("---tamaño lista en sala: "+listaPacientesEnSalaEspera.size());
+        model.addAttribute("fichas", listaPacientesEnSalaEspera);
+        model.addAttribute("titulo","Fichas en anteción");
+        return "ficha-atencion/lista-pacientes-atendidos";
+    }
+
+    @GetMapping("/ver-diagnostico/{id}")
+    public String verConDiagnostico(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash){
+        if (id<0){
+            flash.addFlashAttribute("error","Error al consultar ficha");
+            return "/ficha-atencion/";
+        }
+        model.put("fichaAtencion", fichaAtencionService.findById(id));
+        model.put("titulo", TITULO_MANTENEDOR);
+        return "ficha-atencion/ver-diagnostico";
+    }
+
+    @GetMapping("/form-diagnostico/{id}")
+    public String creaFormularioDiagnostico(@PathVariable(value = "id") Long id, Model model){
+        FichaAtencion fichaAtencion = fichaAtencionService.findById(id);
+        model.addAttribute("fichaAtencion", fichaAtencion);
+        model.addAttribute("titulo","Agregar diagnostico");
+        return "ficha-atencion/form-diagnostico";
+    }
+
+    @PostMapping("/form-diagnostico")
+    public String guardarFormularioDiagnostico(@Valid FichaAtencion fichaAtencion, Model model, BindingResult result, RedirectAttributes flash,
+                                               SessionStatus status){
+        fichaAtencion.setEstadoAtencion('f');
+        fichaAtencionService.save(fichaAtencion);
+        status.setComplete();
+        model.addAttribute("fichaAtencion", fichaAtencion);
+        model.addAttribute("titulo","Agregar diagnostico");
+        flash.addFlashAttribute("success", "Ficha de atención ingresada con exito");
+        return "redirect:/ficha-atencion/lista-pacientes-altas";
+    }
+
+    @GetMapping("/lista-pacientes-altas")
+    public String listaPacientesEnAlta(Model model, RedirectAttributes flash){
+        List<FichaAtencion> listaPacientesEnAlta = new ArrayList<>();
+        List<FichaAtencion> fichas = fichaAtencionService.findAll();
+        for (FichaAtencion f: fichas) {
+            if (f.getEstadoAtencion() == 'f'){
+                listaPacientesEnAlta.add(f);
+            }
+        }
+        logger.info("---tamaño lista en alta: "+listaPacientesEnAlta.size());
+        model.addAttribute("fichas", listaPacientesEnAlta);
+        model.addAttribute("titulo","Fichas en anteción");
+        return "ficha-atencion/lista-pacientes-atendidos";
+    }
+
+    /*
+    @GetMapping("/espera-atencion")
+    public String buscarListaEspera(Model model, RedirectAttributes flash){
+        List<FichaAtencion> listaFichasAtencionEnEspera = new ArrayList<>();
+        List<FichaAtencion> fichas = fichaAtencionService.findAll();
+        for (FichaAtencion f: fichas) {
+            if (f.getEstadoAtencion() == 'p'){
+                listaFichasAtencionEnEspera.add(f);
+            }
+        }
+        logger.info("---tamaño lista: "+listaFichasAtencionEnEspera.size());
+        model.addAttribute("listaFichasAtencionEnEspera", listaFichasAtencionEnEspera);
+        model.addAttribute("titulo",TITULO_MANTENEDOR);
+        return "ficha-atencion/espera-atencion";
+    }
+
+    @GetMapping("/atencion-finalizada")
+    public String buscarAtencionesFinalizadas(Model model, RedirectAttributes flash){
+        List<FichaAtencion> listaFichasAtencionEnEspera = new ArrayList<>();
+        List<FichaAtencion> fichas = fichaAtencionService.findAll();
+        for (FichaAtencion f: fichas) {
+            if (f.getEstadoAtencion() == 'f'){
+                listaFichasAtencionEnEspera.add(f);
+            }
+        }
+        logger.info("---tamaño lista: "+listaFichasAtencionEnEspera.size());
+        model.addAttribute("listaFichasAtencionEnEspera", listaFichasAtencionEnEspera);
+        model.addAttribute("titulo",TITULO_MANTENEDOR);
+        return "ficha-atencion/espera-atencion";
+    }
+
+    @RequestMapping(value = "/atender/{id}")
+    public String atenderFicha(@PathVariable(value = "id") Long id, Map<String, Object> model,  RedirectAttributes flash){
+        if (id<0){
+            flash.addFlashAttribute("error","Error al consultar ficha");
+            return "/ficha-atencion/";
+        }
+        FichaAtencion fichaTemp = fichaAtencionService.findById(id);
+        fichaTemp.setEstadoAtencion('a');
+        fichaAtencionService.save(fichaTemp);
+        model.put("fichaAtencion", fichaTemp);
+        model.put("titulo", TITULO_MANTENEDOR);
+        return "redirect:/ficha-atencion/lista-fichas-atencion";
+    }*/
+
+
+
+
+
 
 }

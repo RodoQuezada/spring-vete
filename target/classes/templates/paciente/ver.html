@@ -16,16 +16,16 @@
             <ul class="list-group my-2">
                 <li class="list-group-item list-group-item-secondary" th:text="'Datos del Paciente'"></li>
                 <li class="list-group-item" th:text="'Nombre Mascota: ' + ${paciente.nombre}"></li>
-                <li class="list-group-item" th:text="'Fecha Nacimiento: ' + ${paciente.fechaNacimiento}"></li>
-                <li class="list-group-item" th:text="'Fecha Fallecimiento: ' + ${paciente.fechaFallecimiento}"></li>
+                <li class="list-group-item" th:text="'Especie: ' + ${paciente.raza.especie.nombre}"></li>
+                <li class="list-group-item" th:text="'Raza: ' + ${paciente.raza.nombre}"></li>
+                <li class="list-group-item" th:text="'Codigo Chip: ' + ${paciente.codigoChip == null ? 'Sin codigo ingresado' : paciente.codigoChip}"></li>
                 <li class="list-group-item"
                     th:text="'Sexo: ' + ${paciente.sexo == 'm' ? 'Masculino' : 'Femenino'}"></li>
                 <li class="list-group-item"
-                    th:text="'Castrado: ' + ${paciente.castrado == 'true' ? 'castrado' : 'no castrado'}"></li>
-                <li class="list-group-item" th:text="'Fecha de ingreso Sistema: ' + ${paciente.createAt}"></li>
-                <li class="list-group-item" th:text="'Especie: ' + ${paciente.raza.especie.nombre}"></li>
-                <li class="list-group-item" th:text="'Raza: ' + ${paciente.raza.nombre}"></li>
-                <li class="list-group-item" th:text="'Codigo Chip: ' + ${paciente.codigoChip}"></li>
+                    th:text="'Castrado: ' + ${paciente.castrado == 'true' ? 'Castrado' : 'No castrado'}"></li>
+                <li class="list-group-item" th:text="'Fecha de ingreso Sistema: ' + ${#dates.format(paciente.createAt,'dd-MM-yyyy')}"></li>
+                <li class="list-group-item" th:text="'Fecha Nacimiento: ' + ${#dates.format(paciente.fechaNacimiento, 'dd-MM-yyyy')}"></li>
+                <li th:if="${paciente.fechaFallecimiento != null}" class="list-group-item" th:text="'Fecha Fallecimiento: ' + ${#dates.format(paciente.fechaFallecimiento,'dd-MM-yyyy')}"></li>
             </ul>
 
             <div th:if="${#lists.isEmpty(paciente.fichas)}" class="alert alert-info my-4"
@@ -38,15 +38,16 @@
                     <th>fecha</th>
                     <th>motivo</th>
                     <th>estado</th>
-                    <th></th>
+                    <th>estado pago</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="fichaAtencion : ${paciente.fichas}">
                     <td th:text="${fichaAtencion.id}"></td>
-                    <td th:text="${fichaAtencion.fechaAtencion}"></td>
+                    <td th:text="${#dates.format(fichaAtencion.fechaAtencion,'dd-MM-yyyy')}"></td>
                     <td th:text="${fichaAtencion.motivo}"></td>
-                    <td th:text="${fichaAtencion.estadoAtencion == 'true' ? 'atendido' : 'terminado'}"></td>
+                    <td th:text="${fichaAtencion.estadoAtencion} == p ? 'Paciente en espera' : (${fichaAtencion.estadoAtencion} == a ? 'Paciente siendo atendido' : 'Paciente en atención' ) "></td>
+                    <td th:text="${fichaAtencion.estadoPago == false ? 'Cliente no registra pago' : 'Pagado'}"></td>
                     <td><a class="btn btn-info btn-xs" th:href="@{'/ficha-atencion/ver/' + ${fichaAtencion.id}}"
                            th:text="'ver'">
                     </a></td>

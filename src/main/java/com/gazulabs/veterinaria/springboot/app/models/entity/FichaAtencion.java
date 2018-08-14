@@ -18,8 +18,24 @@ public class FichaAtencion implements Serializable {
     private Date fechaAtencion;
     @NotEmpty
     private String motivo;
+
+    /*
+    Nomenclatura de estado atencion:
+    - P: Por atender (Paciente se encuentra en sala de espera).
+    - A: Atendiendo (Paciente se encuentra en observación o en atención).
+    - F: Finalizado (Paciente de alta).
+     */
     @Column(name = "estado_atencion")
-    private Boolean estadoAtencion;
+    private Character estadoAtencion;
+
+    /*
+     Nomenclatura de estado pago:
+     -False: No se ha realizado el pago.
+     -True: Se encuentra pagada
+     */
+    @Column(name = "estado_pago")
+    private Boolean estadoPago;
+
     private String diagnostico;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,13 +44,14 @@ public class FichaAtencion implements Serializable {
     @OneToMany(mappedBy = "fichaAtencion", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     List<Atencion> atenciones;
 
-
-
-
     @PrePersist
     public void prePersist() {
-        fechaAtencion = new Date();
-        estadoAtencion = true;
+        this.fechaAtencion = new Date();
+    }
+
+    public FichaAtencion() {
+        this.estadoAtencion = 'p';
+        this.estadoPago = false;
     }
 
     public Long getId() {
@@ -61,12 +78,20 @@ public class FichaAtencion implements Serializable {
         this.motivo = motivo;
     }
 
-    public Boolean getEstadoAtencion() {
+    public char getEstadoAtencion() {
         return estadoAtencion;
     }
 
-    public void setEstadoAtencion(Boolean estadoAtencion) {
+    public void setEstadoAtencion(char estadoAtencion) {
         this.estadoAtencion = estadoAtencion;
+    }
+
+    public Boolean getEstadoPago() {
+        return estadoPago;
+    }
+
+    public void setEstadoPago(Boolean estadoPago) {
+        this.estadoPago = estadoPago;
     }
 
     public String getDiagnostico() {

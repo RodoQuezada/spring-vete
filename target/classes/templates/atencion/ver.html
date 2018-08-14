@@ -10,11 +10,16 @@
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
             <ul class="list-group">
-                <li class="list-group-item" th:text="'#: ' + ${atencion.id}"></li>
                 <li class="list-group-item" th:text="'Peso: ' + ${atencion.peso}"></li>
                 <li class="list-group-item" th:text="'Temperatura: '+${atencion.temperatura}"></li>
                 <li class="list-group-item" th:text="'Signos Vitales: '+${atencion.signosVitales}"></li>
+                <li class="list-group-item" th:text="'Fecha: '+ ${#dates.format(atencion.createAt,'dd-MM-yyyy')}"></li>
             </ul>
+
+            <h4 class="card-title">
+                <a class="btn btn-primary btn-xs" th:href="@{'/ficha-atencion/lista-pacientes-atendidos/'}"
+                   th:text="'volver'"></a>
+            </h4>
         </div>
     </div>
 </div>

@@ -7,37 +7,42 @@
 
 <div class="container py-4">
     <div class="card bg-light">
-        <div class="card-header" th:text="'Lista de Fichas de Atencion Registradas'"></div>
+        <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
 
             <div th:if="${#lists.isEmpty(fichas)}" class="alert alert-info my-4"
                  th:text="'No se encuentran fichas de atención registradas'"></div>
             <table th:if="${not #lists.isEmpty(fichas)}" class="table table-bordered my-4">
-                <thead class="thead-light">
+                <thead class="thead-dark">
                 <tr>
                     <th>#</th>
                     <th>fecha</th>
                     <th>nombre paciente</th>
                     <th>especie</th>
                     <th>raza</th>
-
                     <th>motivo</th>
+                    <th>diagnostico</th>
                     <th>ver</th>
+
                 </tr>
                 </thead>
                 <tbody>
-                  <tr th:each="fichaAtencion : ${fichas}">
-                      <td th:text="${fichaAtencion.id}"></td>
-                      <td th:text="${fichaAtencion.fechaAtencion}"></td>
-                      <td th:text="${fichaAtencion.paciente.nombre}"></td>
-                      <td th:text="${fichaAtencion.paciente.raza.especie.nombre}"></td>
-                      <td th:text="${fichaAtencion.paciente.raza.nombre}"></td>
-                      <td th:text="${fichaAtencion.motivo}"></td>
-                      <td><a class="btn btn-info btn-xs" th:href="@{'/ficha-atencion/ver/' + ${fichaAtencion.id}}"
-                             th:text="'ver'"></a> </td>
-                  </tr>
+                <tr th:each="fichaAtencion : ${fichas}">
+                    <td th:text="${fichaAtencion.id}"></td>
+                    <td th:text="${fichaAtencion.fechaAtencion}"></td>
+                    <td th:text="${fichaAtencion.paciente.nombre}"></td>
+                    <td th:text="${fichaAtencion.paciente.raza.especie.nombre}"></td>
+                    <td th:text="${fichaAtencion.paciente.raza.nombre}"></td>
+                    <td th:text="${fichaAtencion.motivo}"></td>
+                    <td th:text="${fichaAtencion.diagnostico == null ? 'Sin diagnostico' : fichaAtencion.diagnostico}"></td>
+                    <td><a class="btn btn-info btn-xs" th:href="@{'/ficha-atencion/ver-diagnostico/' + ${fichaAtencion.id}}"
+                           th:text="'ver'"></a> </td>
+                </tr>
                 </tbody>
             </table>
+
+
+
         </div>
     </div>
 </div>

@@ -15,16 +15,15 @@
                ${fichaAtencion.paciente.cliente.apellidoPaterno}"></li>
                 <li class="list-group-item" th:text="'Nombre Paciente: '+ ${fichaAtencion.paciente.nombre}"></li>
                 <li class="list-group-item" th:text="'Raza Paciente: '+ ${fichaAtencion.paciente.raza.nombre}"></li>
-                <li class="list-group-item" th:text="'Fecha Atención: '+ ${fichaAtencion.fechaAtencion}"></li>
                 <li class="list-group-item" th:text="'Motivo: '+ ${fichaAtencion.motivo}"></li>
-                <li class="list-group-item" th:text="'Diagnostico: '+ ${fichaAtencion.diagnostico}"></li>
-                <li class="list-group-item" th:text="'Fecha Atención: '+ ${fichaAtencion.estadoAtencion}"></li>
-
+                <li class="list-group-item" th:text="'Diagnostico: '+ ${fichaAtencion.diagnostico == null ? 'Sin diagnostico' : fichaAtencion.diagnostico}"></li>
+                <li class="list-group-item" th:text="'Fecha Atención: '+ ${#dates.format(fichaAtencion.fechaAtencion, 'dd-MM-yyyy')}"></li>
             </ul>
 
             <div th:if="${#lists.isEmpty(fichaAtencion.atenciones)}" class="alert alert-info my-4"
                  th:text="'Ficha no registra atenciones'"></div>
-            <table th:if="${not #lists.isEmpty(fichaAtencion.atenciones)}" class="table table-bordered table-striped my-4">
+            <table th:if="${not #lists.isEmpty(fichaAtencion.atenciones)}"
+                   class="table table-bordered table-striped my-4">
                 <p class="card-header">Lista de atenciones</p>
                 <thead class="thead-light">
                 <tr>
@@ -38,21 +37,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="atencion : ${fichaAtencion.atenciones}">
-                        <td th:text="${atencion.id}"></td>
-                        <td th:text="${#dates.format(atencion.createAt,'dd-MM-yyyy HH:mm')}"></td>
-                        <td th:text="${atencion.peso}"></td>
-                        <td th:text="${atencion.temperatura}"></td>
-                        <td th:text="${atencion.signosVitales}"></td>
-                        <td th:text="${atencion.usuario.nombre} +' '+ ${atencion.usuario.apellidoPaterno}"></td>
-                        <td><a class="btn btn-info btn-xs" th:href="@{'/atencion/ver/' + ${atencion.id}}" th:text="'ver'"></a> </td>
-                    </tr>
+                <tr th:each="atencion : ${fichaAtencion.atenciones}">
+                    <td th:text="${atencion.id}"></td>
+                    <td th:text="${#dates.format(atencion.createAt,'dd-MM-yyyy HH:mm')}"></td>
+                    <td th:text="${atencion.peso}"></td>
+                    <td th:text="${atencion.temperatura}"></td>
+                    <td th:text="${atencion.signosVitales}"></td>
+                    <td th:text="${atencion.usuario.nombre} +' '+ ${atencion.usuario.apellidoPaterno}"></td>
+                    <td><a class="btn btn-info btn-xs" th:href="@{'/atencion/ver/' + ${atencion.id}}"
+                           th:text="'ver'"></a></td>
+                </tr>
                 </tbody>
             </table>
 
+
             <h4 class="card-title">
-                <a class="btn btn-primary btn-xs" th:href="@{'/atencion/form/' + ${fichaAtencion.id}}" th:text="'agregar atención'"></a>
+                <a class="btn btn-primary btn-xs" th:href="@{'/ficha-atencion/lista-sala-espera/'}" th:text="'volver'"></a>
             </h4>
+
         </div>
     </div>
 </div>

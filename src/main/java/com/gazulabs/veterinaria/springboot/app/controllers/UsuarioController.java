@@ -16,6 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,7 +34,12 @@ public class UsuarioController {
     @GetMapping("/form")
     public String crear(Model model){
         Usuario usuario = new Usuario();
-        List<Usuario> lstUsuarios = usuarioService.findAll();
+        List<Usuario> lstUsuarios = new ArrayList<>();
+        try {
+             lstUsuarios = usuarioService.findAll();
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }
         List<TipoUsuario> lstTipoUsuario = tipoUsuarioService.findAll();
         model.addAttribute("lstUsuarios", lstUsuarios);
         model.addAttribute("lstTipoUsuario", lstTipoUsuario);

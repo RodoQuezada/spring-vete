@@ -14,5 +14,7 @@ public interface IFichaAtencionService {
 
     public List<FichaAtencion> findAll();
 
+    public List<FichaAtencion> buscarFichaPorEstadoAtencion(char estado);
+
 
 }

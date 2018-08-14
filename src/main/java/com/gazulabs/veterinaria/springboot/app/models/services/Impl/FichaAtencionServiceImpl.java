@@ -39,5 +39,11 @@ public class FichaAtencionServiceImpl implements IFichaAtencionService {
         return (List<FichaAtencion>) fichaAtencionDao.findAll();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<FichaAtencion> buscarFichaPorEstadoAtencion(char estado) {
+        return fichaAtencionDao.buscarFichaPorEstadoAtencion(estado);
+    }
+
 
 }

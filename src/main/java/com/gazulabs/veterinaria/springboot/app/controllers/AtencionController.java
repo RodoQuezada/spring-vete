@@ -66,7 +66,7 @@ public class AtencionController {
         status.setComplete();
         flash.addFlashAttribute("success","Atención agregada con éxtio");
         model.addAttribute("titulo",TITULO_MANTENEDOR);
-        return "redirect:/ficha-atencion/ver/" + atencion.getFichaAtencion().getId();
+        return "redirect:/ficha-atencion/ver-diagnostico/" + atencion.getFichaAtencion().getId();
     }
 
     @GetMapping("/ver/{id}")

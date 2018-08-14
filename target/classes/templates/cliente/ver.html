@@ -16,8 +16,8 @@
                 <li class="list-group-item" th:text="'Dirección: ' +${cliente.direccion}"></li>
                 <li class="list-group-item" th:text="'Telefono: ' +${cliente.telefono}"></li>
                 <li class="list-group-item" th:text="'E-mail: ' +${cliente.email}"></li>
-                <li class="list-group-item" th:text="'Fecha creación: ' +${cliente.createAt}"></li>
-                <li class="list-group-item" th:text="'Activo: ' +${cliente.activoSistema == true ? 'si': 'no'}"></li>
+                <li class="list-group-item" th:text="'Fecha creación: ' +${#dates.format(cliente.createAt,'dd-MM-yyyy')}"></li>
+                <li class="list-group-item" th:text="'Activo: ' +${cliente.activoSistema == true ? 'Si': 'No'}"></li>
             </ul>
 
             <br/>
@@ -41,7 +41,7 @@
                         <td th:text="${paciente.nombre}"></td>
                         <td th:text="${paciente.raza.especie.nombre}"></td>
                         <td th:text="${paciente.raza.nombre}"></td>
-                        <td th:text="${paciente.sexo == 'm' ? 'masculino' : 'femenino'}"></td>
+                        <td th:text="${paciente.sexo == 'm' ? 'Masculino' : 'Femenino'}"></td>
                         <td ><a class="btn btn-primary btn-xs" th:href="@{/paciente/ver/} + ${paciente.id}" th:text="'detalle'"></a>
                         </td>
                     </tbody>
