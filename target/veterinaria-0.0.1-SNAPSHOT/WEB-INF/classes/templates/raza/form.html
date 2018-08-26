@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+
+            <form th:action="@{/raza/form}" th:object="${raza}" method="post">
+
+                <div class="form-group row">
+                    <label for="nombre" class="col-sm-2 col-form-label">Especie</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" th:field="*{especie.id}" required="true">
+                            <option th:each="especie : ${lstEspecies}"
+                                    th:value="${especie.id}"
+                                    th:text="${especie.nombre}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+                    <div class="col-sm-6">
+                        <input id="nombre" type="text" th:field="*{nombre}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" required="true" pattern="[A-Za-z]{4-50}"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}"
+                               th:errors="*{nombre}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="color" class="col-sm-2 col-form-label">Color</label>
+                    <div class="col-sm-6">
+                        <input id="color" type="text" th:field="*{color}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" required="required"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('color')}"
+                               th:errors="*{color}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="colorSecundario" class="col-sm-2 col-form-label">Color Secundario</label>
+                    <div class="col-sm-6">
+                        <input id="colorSecundario" type="text" th:field="*{colorSecundario}" class="form-control"
+                               th:errorclass="'form-control alert-danger'"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('colorSecundario')}"
+                               th:errors="*{colorSecundario}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <input type="submit" th:value="${titulo}"
+                               class="btn btn-secondary"/>
+                    </div>
+                </div>
+            </form>
+            <br/>
+            <p class="card-header">Lista de razas registradas</p>
+            <table class="table table-bordered table-striped my-4">
+                <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>nombre</th>
+                    <th>color</th>
+                    <th>color secundario</th>
+                    <th>especie</th>
+                    <th>eliminar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="raza : ${lstRazas}">
+                    <th th:text="${raza.id}"></th>
+                    <th th:text="${raza.nombre}"></th>
+                    <th th:text="${raza.color}"></th>
+                    <th th:text="${raza.colorSecundario}"></th>
+                    <th th:text="${raza.especie.nombre}"></th>
+                    <th><a class="btn btn-danger btn-xs" th:href="@{/raza/eliminar/} + ${raza.id}"
+                        th:text="'eliminar'"  onclick="return confirm('Estas seguro que quieres eliminar?')"
+                           ></a>
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+</html>

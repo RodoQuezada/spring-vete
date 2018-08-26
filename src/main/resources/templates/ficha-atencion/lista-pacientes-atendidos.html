@@ -21,7 +21,6 @@
                     <th>especie</th>
                     <th>raza</th>
                     <th>motivo</th>
-                    <th>diagnostico</th>
                     <th>ver</th>
 
                 </tr>
@@ -34,7 +33,6 @@
                     <td th:text="${fichaAtencion.paciente.raza.especie.nombre}"></td>
                     <td th:text="${fichaAtencion.paciente.raza.nombre}"></td>
                     <td th:text="${fichaAtencion.motivo}"></td>
-                    <td th:text="${fichaAtencion.diagnostico == null ? 'Sin diagnostico' : fichaAtencion.diagnostico}"></td>
                     <td><a class="btn btn-info btn-xs" th:href="@{'/ficha-atencion/ver-diagnostico/' + ${fichaAtencion.id}}"
                            th:text="'ver'"></a> </td>
                 </tr>

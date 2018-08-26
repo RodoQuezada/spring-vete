@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+
+            <form th:action="@{/paciente/form/}" th:object="${paciente}" method="post"  enctype="multipart/form-data">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" th:text="'Nombre Cliente: '"></label>
+                    <div class="col-sm-6">
+                        <input class="form-control"
+                               th:value="${paciente.cliente.nombre} + ' '+ ${paciente.cliente.apellidoPaterno}"
+                               disabled="disabled"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="nombre" class="col-sm-2 col-form-label">Nombre Paciente:</label>
+                    <div class="col-sm-6">
+                        <input id="nombre" type="text" th:field="*{nombre}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" required="true" pattern="[A-Za-z]{4-50}"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}"
+                               th:errors="*{nombre}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="fechaNacimiento" class="col-sm-2 col-form-label">Fecha Nacimiento:</label>
+                    <div class="col-sm-6">
+                        <input id="fechaNacimiento" type="date" class="form-control" th:field="*{fechaNacimiento}"
+                               th:errorclass="'form-control alert-danger'" required="true"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('fechaNacimiento')}"
+                               th:errors="*{fechaNacimiento}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="fechaFallecimiento" class="col-sm-2 col-form-label">Fecha Fallecimiento:</label>
+                    <div class="col-sm-6">
+                        <input id="fechaFallecimiento" type="date" class="form-control" th:field="*{fechaFallecimiento}"
+                               th:errorclass="'form-control alert-danger'" />
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('fechaFallecimiento')}"
+                               th:errors="*{fechaFallecimiento}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="codigoChip" class="col-sm-2 col-form-label">Codigo Chip:</label>
+                    <div class="col-sm-6">
+                        <input id="codigoChip" type="text" th:field="*{codigoChip}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" />
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('codigoChip')}"
+                               th:errors="*{codigoChip}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="sexo" class="col-sm-2 col-form-label">Sexo:</label>
+                    <div class="col-sm-6">
+                        <select class="form-control custom-select" aria-describedby="status-addon" id="sexo" th:field="*{sexo}">
+                            <option th:value="'m'" th:text="'Masculino'"></option>
+                            <option th:value="'f'" th:text="'Femenino'"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="especie" class="col-sm-2 col-form-label">Especie:</label>
+                    <div class="col-sm-6">
+                        <select id="especie" name="especie" class="form-control custom-select" th:field="*{raza.especie.id}" onchange="miFuncion()"  required="true">
+                           <option th:value="0" th:text="'Ingrese Especie'" />
+                            <option th:each="especie : ${lstEspecies}"
+                                    th:value="${especie.id}"
+                                    th:text="${especie.nombre}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="raza" class="col-sm-2 col-form-label">Raza:</label>
+                    <div class="col-sm-6">
+                        <select id="raza" name="raza" class="form-control custom-select" th:field="*{raza.id}" required="true" >
+                            <option th:fragment="listaDeRazasFiltrada"
+                                    th:each="raza : ${listaRazas}"
+                                    th:value="${raza.id}"
+                             th:text="${raza.nombre} + ' (Color: ' +  ${raza.color} + ')' "> </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="file" class="col-sm-2 col-form-label">Foto:</label>
+                    <div class="col-sm-6">
+                        <input id="file" type="file" name="file" class="form-control">
+                    </div>
+
+                </div>
+
+                <div class="form-group row align-baseline">
+                    <label for="castrado" class="col-sm-2 col-form-label">Castrado:</label>
+                    <div class="col-sm-6">
+                        <input id="castrado" type="checkbox" th:field="*{castrado}" class="custom-control custom-checkbox"
+                               th:errorclass="'form-control alert-danger'" />
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('castrado')}"
+                               th:errors="*{castrado}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <input type="submit" th:value="${titulo}"
+                               class="btn btn-secondary" />
+                    </div>
+                </div>
+
+            </form>
+
+            <h4 class="card-title">
+                <a class="btn btn-light btn-xs" th:href="@{'/cliente/ver/' + ${paciente.cliente.id}}"
+                   th:text="'&laquo; volver'"></a>
+            </h4>
+        </div>
+    </div>
+</div>
+
+<script language="JavaScript" type="text/javascript">
+    function miFuncion() {
+        var esp = document.getElementById("especie");
+        var especieId = esp.options[esp.selectedIndex].value;
+        var url = '/paciente/cargarlistas/' + especieId;
+        $("#raza").load(url);
+    }
+</script>
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

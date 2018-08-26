@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container-fluid py-4">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+
+            <div th:object="${cliente}" th:remove="tag">
+                <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
+                    role="alert">
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                </ul>
+            </div>
+
+            <form th:action="@{/cliente/form}" th:object="${cliente}" method="post">
+
+                <div class="form-group row">
+                    <label for="rut" class="col-sm-2 col-form-label">Rut:</label>
+                    <div class="col-sm-6">
+                        <input id="rut" type="text" th:field="*{rut}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" pattern="[1-9]+" />
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('rut')}"
+                               th:errors="*{rut}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="nombre" class="col-sm-2 col-form-label">Nombre:</label>
+                    <div class="col-sm-6">
+                        <input id="nombre" type="text" th:field="*{nombre}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]{4-50}"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}"
+                               th:errors="*{nombre}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="apellidoPaterno" class="col-sm-2 col-form-label">Apellido Paterno:</label>
+                    <div class="col-sm-6">
+                        <input id="apellidoPaterno" type="text" th:field="*{apellidoPaterno}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]{4-50}"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('apellidoPaterno')}"
+                               th:errors="*{apellidoPaterno}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="apellidoMaterno" class="col-sm-2 col-form-label">Apellido Materno:</label>
+                    <div class="col-sm-6">
+                        <input id="apellidoMaterno" type="text" th:field="*{apellidoMaterno}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]{4-50}"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('apellidoMaterno')}"
+                               th:errors="*{apellidoMaterno}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="direccion" class="col-sm-2 col-form-label">Dirección:</label>
+                    <div class="col-sm-6">
+                        <input id="direccion" type="text" th:field="*{direccion}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" />
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('direccion')}"
+                               th:errors="*{direccion}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="telefono" class="col-sm-2 col-form-label">Teléfono:</label>
+                    <div class="col-sm-6">
+                        <input id="telefono" type="text" th:field="*{telefono}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" pattern="^[9|8|7|6|5|4]\d{8}$"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('telefono')}"
+                               th:errors="*{telefono}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">E-mail:</label>
+                    <div class="col-sm-6">
+                        <input id="email" type="email" th:field="*{email}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" />
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}"
+                               th:errors="*{email}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <input type="submit" th:value="${titulo}"
+                               class="btn btn-secondary" />
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+</html>

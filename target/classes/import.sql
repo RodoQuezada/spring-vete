@@ -4,11 +4,10 @@ INSERT INTO clientes (rut, nombre, apellido_paterno, apellido_materno, direccion
 INSERT INTO clientes (rut, nombre, apellido_paterno, apellido_materno, direccion, telefono, email, create_at, activo_sistema) VALUES (20321321,'Elon','Musk','', 'Gringolandia', 911111111, 'elonmusk@gmail.com','2018-05-05', true);
 INSERT INTO clientes (rut, nombre, apellido_paterno, apellido_materno, direccion, telefono, email, create_at, activo_sistema) VALUES (10123123,'Albert','Einstein','Einstein', 'Alemania', 987654321, 'albert@gmail.com','2018-05-05', true);
 
-INSERT INTO especies(nombre) VALUES ('Caninos');
-INSERT INTO especies(nombre) VALUES ('Felinos');
-INSERT INTO especies(nombre) VALUES ('Aves');
-INSERT INTO especies(nombre) VALUES ('Reptiles');
-INSERT INTO especies(nombre) VALUES ('Paces');
+INSERT INTO especies(nombre) VALUES ('Canino');
+INSERT INTO especies(nombre) VALUES ('Felino');
+INSERT INTO especies(nombre) VALUES ('Aviar');
+INSERT INTO especies(nombre) VALUES ('Reptil');
 
 insert into razas (color, color_secundario, especie_id, nombre) values ('Amarillo','Negro', 1, 'Pug');
 insert into razas (color, color_secundario, especie_id, nombre) values ('Negro','Amarillo', 1, 'Pastor Aleman');

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+
+            <ul class="list-group">
+                <li class="list-group-item" th:text="'Rut: ' +${cliente.rut}"></li>
+                <li class="list-group-item" th:text="'Nombre: ' +${cliente.nombre}+' '+${cliente.apellidoPaterno}+' '+${cliente.apellidoMaterno}"></li>
+                <li class="list-group-item" th:text="'Dirección: ' +${cliente.direccion}"></li>
+                <li class="list-group-item" th:text="'Telefono: ' +${cliente.telefono}"></li>
+                <li class="list-group-item" th:text="'E-mail: ' +${cliente.email}"></li>
+                <li class="list-group-item" th:text="'Fecha creación: ' +${#dates.format(cliente.createAt,'dd-MM-yyyy')}"></li>
+                <li class="list-group-item" th:text="'Activo: ' +${cliente.activoSistema == true ? 'Si': 'No'}"></li>
+            </ul>
+
+            <br/>
+            <div th:if="${#lists.isEmpty(cliente.pacientes)}" class="alert alert-info my-4"
+                 th:text="'No hay registro de pacientes para el cliente '+ ${cliente.nombre}+ ' '+ ${cliente.apellidoPaterno}"></div>
+            <table th:if="${not #lists.isEmpty(cliente.pacientes)}" class="table table-bordered table-striped my-4">
+                <p class="card-header"> Lista de Pacientes </p>
+                <thead class="thead-inverse">
+                <tr>
+                    <th>#</th>
+                    <th>nombre</th>
+                    <th>especie</th>
+                    <th>raza</th>
+                    <th>sexo</th>
+                    <th>detalle</th>
+                </tr>
+                </thead>
+                    <tbody>
+                    <tr th:each="paciente: ${cliente.pacientes}">
+                        <td th:text="${paciente.id}"></td>
+                        <td th:text="${paciente.nombre}"></td>
+                        <td th:text="${paciente.raza.especie.nombre}"></td>
+                        <td th:text="${paciente.raza.nombre}"></td>
+                        <td th:text="${paciente.sexo == 'm' ? 'Masculino' : 'Femenino'}"></td>
+                        <td ><a class="btn btn-primary btn-xs" th:href="@{/paciente/ver/} + ${paciente.id}" th:text="'detalle'"></a>
+                        </td>
+                    </tbody>
+            </table>
+            <h4 class="card-title">
+                <a class="btn btn-primary btn-xs" th:href="@{'/paciente/form/' + ${cliente.id}}" th:text="'agregar paciente'"></a>
+            </h4>
+
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+</html>

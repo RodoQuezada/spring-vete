@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+
+
+
+            <div class="card-group">
+                <div class="card border-primary mb-3 view overlay"  style="max-width: 18rem;">
+                    <div class="view overlay" th:if="${not #lists.isEmpty(paciente.foto)}">
+                        <img class="card-img-top" th:src="@{'/paciente/uploads/'+${paciente.foto}}" alt="Card image cap">
+                        <a href="#!">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+                    <div class="card-header" th:text="'Datos Cliente'"></div>
+                    <div class="card-body text-primary">
+                        <ul class="list-group my-2">
+                            <li class="list-group-item" th:text="'Nombre Cliente: '+${paciente.cliente.nombre}+
+                ' '+${paciente.cliente.apellidoPaterno}+' '+${paciente.cliente.apellidoMaterno}"></li>
+                            <li class="list-group-item" th:text="'Rut: ' + ${paciente.cliente.rut}"></li>
+                            <li class="list-group-item" th:text="'Nombre Paciente: ' + ${paciente.nombre}"></li>
+                            <li class="list-group-item" th:text="'Especie: ' + ${paciente.raza.especie.nombre}"></li>
+                            <li class="list-group-item" th:text="'Raza: ' + ${paciente.raza.nombre}"></li>
+                        </ul>
+                        <!--  <h5 class="card-title">Primary card title</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      -->
+                    </div>
+                </div>
+                <div class="card border-success mb-3" style="max-width: 18rem;">
+                    <div class="card-header" th:text="'Datos Paciente'"></div>
+                    <div class="card-body text-secondary">
+                        <li class="list-group-item" th:text="'Nombre Paciente: ' + ${paciente.nombre}"></li>
+                        <li class="list-group-item" th:text="'Especie: ' + ${paciente.raza.especie.nombre}"></li>
+                        <li class="list-group-item" th:text="'Raza: ' + ${paciente.raza.nombre}"></li>
+                    <!--    <h5 class="card-title">Secondary card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p> -->
+                    </div>
+                </div>
+
+                <div class="card border-success mb-3" style="max-width: 18rem;">
+                    <div class="card-header" th:text="'                 '"></div>
+                    <div class="card-body text-secondary">
+                        <li class="list-group-item" th:text="'Sexo: ' + ${paciente.sexo}"></li>
+                        <li class="list-group-item" th:text="'Castrado: ' + ${paciente.castrado}"></li>
+                        <li class="list-group-item" th:text="'Fecha Nacimiento: ' + ${paciente.fechaNacimiento}"></li>
+                        <!--    <h5 class="card-title">Secondary card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                                the card's content.</p> -->
+                    </div>
+                </div>
+
+            </div>
+<!--
+            <ul class="list-group my-2">
+                <li class="list-group-item list-group-item-primary" th:text="'Datos Cliente'"></li>
+                <li class="list-group-item" th:text="'Nombre Cliente: '+${paciente.cliente.nombre}+
+                ' '+${paciente.cliente.apellidoPaterno}+' '+${paciente.cliente.apellidoMaterno}"></li>
+                <li class="list-group-item" th:text="'Rut: ' + ${paciente.cliente.rut}"></li>
+            </ul>
+
+            <ul class="list-group my-2">
+                <li class="list-group-item list-group-item-secondary" th:text="'Datos Paciente'"></li>
+                <li class="list-group-item" th:text="'Nombre Paciente: ' + ${paciente.nombre}"></li>
+                <li class="list-group-item" th:text="'Especie: ' + ${paciente.raza.especie.nombre}"></li>
+                <li class="list-group-item" th:text="'Raza: ' + ${paciente.raza.nombre}"></li>
+            </ul>
+-->
+            <form th:action="@{/ficha-atencion/form/}" th:object="${fichaAtencion}" method="post">
+
+                <div class="form-group row">
+                    <label for="motivo" class="col-sm-2 col-form-label">Motivo Atención:</label>
+                    <div class="col-sm-6">
+                        <textarea id="motivo" type="text" th:field="*{motivo}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" />
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('motivo')}"
+                               th:errors="*{motivo}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <input type="submit" th:value="${titulo}"
+                               class="btn btn-secondary" />
+                    </div>
+                </div>
+
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+</html>

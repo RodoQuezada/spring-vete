@@ -33,6 +33,7 @@
                     <th>raza</th>
                     <th>sexo</th>
                     <th>detalle</th>
+                    <th>atender</th>
                 </tr>
                 </thead>
                     <tbody>
@@ -43,6 +44,8 @@
                         <td th:text="${paciente.raza.nombre}"></td>
                         <td th:text="${paciente.sexo == 'm' ? 'Masculino' : 'Femenino'}"></td>
                         <td ><a class="btn btn-primary btn-xs" th:href="@{/paciente/ver/} + ${paciente.id}" th:text="'detalle'"></a>
+                        </td>
+                        <td><a class="btn btn-primary btn-xs" th:href="@{/ficha-atencion/form-completo/} + ${paciente.id}" th:text="'atender'"></a>
                         </td>
                     </tbody>
             </table>

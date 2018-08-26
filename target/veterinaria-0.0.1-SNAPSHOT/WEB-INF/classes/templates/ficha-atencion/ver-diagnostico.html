@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+
+            <ul class="list-group">
+                <li class="list-group-item" th:text="'Nombre Cliente: '+ ${fichaAtencion.paciente.cliente.nombre} + ' '+
+               ${fichaAtencion.paciente.cliente.apellidoPaterno}"></li>
+                <li class="list-group-item" th:text="'Nombre Paciente: '+ ${fichaAtencion.paciente.nombre}"></li>
+                <li class="list-group-item" th:text="'Raza Paciente: '+ ${fichaAtencion.paciente.raza.nombre}"></li>
+                <li class="list-group-item" th:text="'Motivo: '+ ${fichaAtencion.motivo}"></li>
+                <li class="list-group-item"
+                    th:text="'Fecha Atención: '+ ${#dates.format(fichaAtencion.fechaAtencion, 'dd-MM-yyyy')}"></li>
+            </ul>
+
+            <div th:if="${#lists.isEmpty(fichaAtencion.atenciones)}" class="alert alert-info my-4"
+                 th:text="'Ficha no registra atenciones'"></div>
+            <table th:if="${not #lists.isEmpty(fichaAtencion.atenciones)}"
+                   class="table table-bordered table-striped my-4">
+                <p class="card-header">Lista de atenciones</p>
+                <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>fecha</th>
+                    <th>peso</th>
+                    <th>temperatura</th>
+                    <th>signos vitales</th>
+                    <th>responsable</th>
+                    <th>ver</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="atencion : ${fichaAtencion.atenciones}">
+                    <td th:text="${atencion.id}"></td>
+                    <td th:text="${#dates.format(atencion.createAt,'dd-MM-yyyy HH:mm')}"></td>
+                    <td th:text="${atencion.peso}"></td>
+                    <td th:text="${atencion.temperatura}"></td>
+                    <td th:text="${atencion.signosVitales}"></td>
+                    <td th:text="${atencion.usuario.nombre} +' '+ ${atencion.usuario.apellidoPaterno}"></td>
+                    <td><a class="btn btn-info btn-xs" th:href="@{'/atencion/ver/' + ${atencion.id}}"
+                           th:text="'ver'"></a></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="card-group">
+                <h4 class="card-title">
+                    <a class="btn btn-primary btn-xs" th:href="@{'/atencion/form/' + ${fichaAtencion.id}}"
+                       th:text="'agregar atención'"></a>
+                </h4>
+
+                <h4 class="card-title">
+                    <a class="btn btn-primary btn-xs" th:href="@{'/ficha-atencion/form-diagnostico/' + ${fichaAtencion.id}}"
+                       th:text="'agregar diagnostico'"></a>
+                </h4>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+</html>

@@ -23,7 +23,7 @@
 
                     <th>motivo</th>
                     <th>ver</th>
-                    <th>atender</th>
+                    <th sec:authorize="hasRole('ROLE_VETERINARIO')">atender</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,7 +36,7 @@
                     <td th:text="${fichaAtencion.motivo}"></td>
                     <td><a class="btn btn-info btn-xs" th:href="@{'/ficha-atencion/ver/' + ${fichaAtencion.id}}"
                            th:text="'ver'"></a> </td>
-                    <td><a class="btn btn-info btn-xs" th:href="@{'/ficha-atencion/atender/' + ${fichaAtencion.id}}"
+                    <td sec:authorize="hasRole('ROLE_VETERINARIO')"><a class="btn btn-info btn-xs" th:href="@{'/ficha-atencion/atender/' + ${fichaAtencion.id}}"
                            th:text="'atender'"></a> </td>
                 </tr>
                 </tbody>
