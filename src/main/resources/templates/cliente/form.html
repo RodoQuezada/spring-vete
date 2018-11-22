@@ -5,7 +5,7 @@
 
 <header th:replace="layout/layout :: header"></header>
 
-<div class="container-fluid py-4">
+<div class="container py-4">
     <div class="card bg-light">
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
@@ -21,9 +21,9 @@
 
                 <div class="form-group row">
                     <label for="rut" class="col-sm-2 col-form-label">Rut:</label>
-                    <div class="col-sm-6">
-                        <input id="rut" type="text" th:field="*{rut}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" pattern="[1-9]+" />
+                    <div class="col-sm-4">
+                        <input id="rut" name="rut" type="text" th:field="*{rut}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" oninput="checkRut(this)" />
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('rut')}"
                                th:errors="*{rut}"></small>
                     </div>
@@ -33,29 +33,29 @@
                     <label for="nombre" class="col-sm-2 col-form-label">Nombre:</label>
                     <div class="col-sm-6">
                         <input id="nombre" type="text" th:field="*{nombre}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]+"/>
+                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]{4-50}"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}"
                                th:errors="*{nombre}"></small>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="apellido_paterno" class="col-sm-2 col-form-label">Apellido Paterno:</label>
+                    <label for="apellidoPaterno" class="col-sm-2 col-form-label">Apellido Paterno:</label>
                     <div class="col-sm-6">
-                        <input id="apellido_paterno" type="text" th:field="*{apellido_paterno}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]+"/>
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('apellido_paterno')}"
-                               th:errors="*{apellido_paterno}"></small>
+                        <input id="apellidoPaterno" type="text" th:field="*{apellidoPaterno}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]{4-50}"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('apellidoPaterno')}"
+                               th:errors="*{apellidoPaterno}"></small>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="apellido_materno" class="col-sm-2 col-form-label">Apellido Materno:</label>
+                    <label for="apellidoMaterno" class="col-sm-2 col-form-label">Apellido Materno:</label>
                     <div class="col-sm-6">
-                        <input id="apellido_materno" type="text" th:field="*{apellido_materno}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]+"/>
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('apellido_materno')}"
-                               th:errors="*{apellido_materno}"></small>
+                        <input id="apellidoMaterno" type="text" th:field="*{apellidoMaterno}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" pattern="[A-Za-z]{4-50}"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('apellidoMaterno')}"
+                               th:errors="*{apellidoMaterno}"></small>
                     </div>
                 </div>
 
@@ -70,8 +70,13 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="telefono" class="col-sm-2 col-form-label">Teléfono:</label>
-                    <div class="col-sm-6">
+                    <label for="telefono" class="col-sm-2 col-form-label">Teléfono: </label>
+                <!--    <div class="col-xs-2" style="width: 5%"> -->
+                    <div class="col-xs-2" style="width: 60px">
+                        <input type="text" class="form-control" disabled th:value="'+56'"
+                               />
+                    </div>
+                    <div class="col-sm-4 " >
                         <input id="telefono" type="text" th:field="*{telefono}" class="form-control"
                                th:errorclass="'form-control alert-danger'" pattern="^[9|8|7|6|5|4]\d{8}$"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('telefono')}"
@@ -81,18 +86,18 @@
 
                 <div class="form-group row">
                     <label for="email" class="col-sm-2 col-form-label">E-mail:</label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <input id="email" type="email" th:field="*{email}" class="form-control"
                                th:errorclass="'form-control alert-danger'" />
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}"
                                th:errors="*{email}"></small>
                     </div>
                 </div>
-
+                   <br/>
                 <div class="form-group row">
-                    <div class="col-sm-6">
+                    <div class="col-xs-4">
                         <input type="submit" th:value="${titulo}"
-                               class="btn btn-secondary" />
+                               class="btn btn-primary btn-xs" />
                     </div>
                 </div>
 
@@ -100,6 +105,31 @@
         </div>
     </div>
 </div>
+
+<script language="JavaScript" type="text/javascript">
+    function checkRut(rut) {
+
+        var valor = rut.value.replace('.','');
+        valor = valor.replace('-','');
+        cuerpo = valor.slice(0,-1);
+        dv = valor.slice(-1).toUpperCase();
+        rut.value = cuerpo + '-'+ dv
+        if(cuerpo.length < 7) { rut.setCustomValidity("RUT Incompleto"); return false;}
+        suma = 0;
+        multiplo = 2;
+        for(i=1;i<=cuerpo.length;i++) {
+            index = multiplo * valor.charAt(cuerpo.length - i);
+            suma = suma + index;
+            if(multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+        }
+        dvEsperado = 11 - (suma % 11);
+        dv = (dv == 'K')?10:dv;
+        dv = (dv == 0)?11:dv;
+        if(dvEsperado != dv) { rut.setCustomValidity("RUT Inválido"); return false; }
+        rut.setCustomValidity('');
+    }
+</script>
+
 
 <footer th:replace="layout/layout :: footer"></footer>
 

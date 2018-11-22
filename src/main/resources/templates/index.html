@@ -9,8 +9,41 @@
     <div class="card bg-light">
         <div class="card-header" th:text="${titulo}"></div>
         <div class="card-body">
+            <h2> Bienvenido a Veterinaria Bailly </h2>
 
- <h4> ¡Index controller funcionando! </h4>
+            <div th:if="${#lists.isEmpty(lstAtenciones)}" class="alert alert-info my-4"
+                 th:text="'No se encuentran registros de atenciones sin pagar' "></div>
+
+            <table th:if="${not #lists.isEmpty(lstAtenciones)}"  class="table table-bordered table-striped my-6">
+                <p class="card-header"> Lista de atenciones no canceladas </p>
+                <thead class="thead-inverse">
+                <tr>
+                    <th>Numero Ficha</th>
+                    <th>Fecha</th>
+                    <th>Nombre Cliente</th>
+                    <th>Nombre Mascota</th>
+                    <th>Especie</th>
+                    <th>Raza</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="fichaAtencion : ${lstAtenciones}" >
+                    <td th:text="${fichaAtencion.id}"></td>
+                    <td th:text="${fichaAtencion.fechaAtencion}"></td>
+                    <td th:text="${fichaAtencion.paciente.cliente.nombre} +' '+${fichaAtencion.paciente.cliente.apellidoPaterno}"></td>
+                    <td th:text="${fichaAtencion.paciente.nombre}"></td>
+                    <td th:text="${fichaAtencion.paciente.raza.especie.nombre}"></td>
+                    <td th:text="${fichaAtencion.paciente.raza.nombre}"></td>
+                    <td th:text="${fichaAtencion.estadoPago}"></td>
+                    <td><a class="btn btn-info btn-xs" th:href="@{'/pagado/' + ${fichaAtencion.id}}"
+                           th:text="'Pagar'"
+                    ></a></td>
+                </tr>
+                </tbody>
+            </table>
+
 
         </div>
     </div>

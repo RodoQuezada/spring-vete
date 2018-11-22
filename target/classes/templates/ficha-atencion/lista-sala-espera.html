@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+
+            <div th:if="${#lists.isEmpty(fichas)}" class="alert alert-info my-4"
+                 th:text="'No se encuentran fichas de atención registradas'"></div>
+            <table th:if="${not #lists.isEmpty(fichas)}" class="table table-bordered my-4">
+                <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>fecha</th>
+                    <th>nombre paciente</th>
+                    <th>especie</th>
+                    <th>raza</th>
+
+                    <th>motivo</th>
+                    <th>ver</th>
+                    <th sec:authorize="hasRole('ROLE_VETERINARIO')">atender</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="fichaAtencion : ${fichas}">
+                    <td th:text="${fichaAtencion.id}"></td>
+                    <td th:text="${fichaAtencion.fechaAtencion}"></td>
+                    <td th:text="${fichaAtencion.paciente.nombre}"></td>
+                    <td th:text="${fichaAtencion.paciente.raza.especie.nombre}"></td>
+                    <td th:text="${fichaAtencion.paciente.raza.nombre}"></td>
+                    <td th:text="${fichaAtencion.motivo}"></td>
+                    <td><a class="btn btn-info btn-xs" th:href="@{'/ficha-atencion/ver/' + ${fichaAtencion.id}}"
+                           th:text="'ver'"></a> </td>
+                    <td sec:authorize="hasRole('ROLE_VETERINARIO')"><a class="btn btn-info btn-xs" th:href="@{'/ficha-atencion/atender/' + ${fichaAtencion.id}}"
+                           th:text="'atender'"></a> </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+
+            <img th:if="${not #lists.isEmpty(paciente.foto)}" class="img-thumbnail rounded float-left"
+                 style="max-width: 25%;" th:src="@{'/paciente/uploads/'+${paciente.foto}}" th:alt="${paciente.foto}">
+
+            <ul class="list-group my-2">
+                <li class="list-group-item list-group-item-secondary" th:text="'Datos del Paciente'"></li>
+                <li class="list-group-item" th:text="'Nombre Mascota: ' + ${paciente.nombre}"></li>
+                <li class="list-group-item" th:text="'Especie: ' + ${paciente.raza.especie.nombre}"></li>
+                <li class="list-group-item" th:text="'Raza: ' + ${paciente.raza.nombre}"></li>
+                <li class="list-group-item" th:text="'Codigo Chip: ' + ${paciente.codigoChip == null ? 'Sin codigo ingresado' : paciente.codigoChip}"></li>
+                <li class="list-group-item"
+                    th:text="'Sexo: ' + ${paciente.sexo == 'm' ? 'Masculino' : 'Femenino'}"></li>
+                <li class="list-group-item"
+                    th:text="'Castrado: ' + ${paciente.castrado == 'true' ? 'Castrado' : 'No castrado'}"></li>
+                <li class="list-group-item" th:text="'Fecha de ingreso Sistema: ' + ${#dates.format(paciente.createAt,'dd-MM-yyyy')}"></li>
+                <li class="list-group-item" th:text="'Fecha Nacimiento: ' + ${#dates.format(paciente.fechaNacimiento, 'dd-MM-yyyy')}"></li>
+                <li th:if="${paciente.fechaFallecimiento != null}" class="list-group-item" th:text="'Fecha Fallecimiento: ' + ${#dates.format(paciente.fechaFallecimiento,'dd-MM-yyyy')}"></li>
+            </ul>
+
+            <div th:if="${#lists.isEmpty(paciente.fichas)}" class="alert alert-info my-4"
+                 th:text="'Paciente ' + ${paciente.nombre}+ ' no posee atenciones registradas ' "></div>
+            <table th:if="${not #lists.isEmpty(paciente.fichas)}" class="table table-bordered table-striped my-4">
+                <p class="card-header"> Lista de Atenciones </p>
+                <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>fecha</th>
+                    <th>motivo</th>
+                    <th>estado</th>
+                    <th>estado pago</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="fichaAtencion : ${paciente.fichas}">
+                    <td th:text="${fichaAtencion.id}"></td>
+                    <td th:text="${#dates.format(fichaAtencion.fechaAtencion,'dd-MM-yyyy')}"></td>
+                    <td th:text="${fichaAtencion.motivo}"></td>
+                    <td th:text="${fichaAtencion.estadoAtencion} == p ? 'Paciente en espera' : (${fichaAtencion.estadoAtencion} == a ? 'Paciente siendo atendido' : 'Paciente en atención' ) "></td>
+                    <td th:text="${fichaAtencion.estadoPago == false ? 'Cliente no registra pago' : 'Pagado'}"></td>
+                    <td><a class="btn btn-info btn-xs" th:href="@{'/ficha-atencion/ver/' + ${fichaAtencion.id}}"
+                           th:text="'ver'">
+                    </a></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="card-group">
+                <h4 class="card-title">
+                    <a th:href="@{'/cliente/ver/' + ${paciente.cliente.id}}" class="btn btn-light btn-xs">&laquo;
+                        volver</a>
+                </h4>
+
+                <h4 class="card-title">
+                    <a th:href="@{'/ficha-atencion/form/' +  ${paciente.id}}" class="btn btn-primary btn-xs">crear ficha
+                        de atención</a>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+</html>

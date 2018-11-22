@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+<header th:replace="layout/layout :: header"></header>
+
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-header" th:text="${titulo}"></div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item" th:text="'Peso: ' + ${atencion.peso}"></li>
+                <li class="list-group-item" th:text="'Temperatura: '+${atencion.temperatura}"></li>
+                <li class="list-group-item" th:text="'Signos Vitales: '+${atencion.signosVitales}"></li>
+                <li class="list-group-item" th:text="'Fecha: '+ ${#dates.format(atencion.createAt,'dd-MM-yyyy')}"></li>
+            </ul>
+
+            <h4 class="card-title">
+                <a class="btn btn-primary btn-xs" th:href="@{'/ficha-atencion/ver-diagnostico/'+ ${atencion.fichaAtencion.id}}" th:text="'volver'"></a>
+            </h4>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+</html>
