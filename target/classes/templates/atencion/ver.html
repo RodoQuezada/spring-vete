@@ -13,6 +13,7 @@
                 <li class="list-group-item" th:text="'Peso: ' + ${atencion.peso}"></li>
                 <li class="list-group-item" th:text="'Temperatura: '+${atencion.temperatura}"></li>
                 <li class="list-group-item" th:text="'Signos Vitales: '+${atencion.signosVitales}"></li>
+                <li class="list-group-item" th:text="'Comentario: '+${atencion.comentario}"></li>
                 <li class="list-group-item" th:text="'Fecha: '+ ${#dates.format(atencion.createAt,'dd-MM-yyyy')}"></li>
             </ul>
 

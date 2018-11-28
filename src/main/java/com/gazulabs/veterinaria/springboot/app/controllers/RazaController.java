@@ -5,6 +5,8 @@ import com.gazulabs.veterinaria.springboot.app.models.entity.Especie;
 import com.gazulabs.veterinaria.springboot.app.models.entity.Raza;
 import com.gazulabs.veterinaria.springboot.app.models.services.IEspecieService;
 import com.gazulabs.veterinaria.springboot.app.models.services.IRazaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/raza")
+//@SessionAttributes("raza")
 public class RazaController {
 
     @Autowired
@@ -28,7 +31,13 @@ public class RazaController {
     @Autowired
     private IEspecieService especieService;
 
+    private static List<Raza> listaRazas = new ArrayList<Raza>();
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     private static final String TITULO_MANTENEDOR = "Agregar Raza";
+
+    private Long idEspecieTemporal;
 
     @GetMapping("/form")
     public String crear(Model model) {
@@ -77,8 +86,48 @@ public class RazaController {
         return "redirect:/raza/form";
     }
 
+    /*
+    @GetMapping("/cargarlistas/{id}")
+    public String cargarListaRazas(@PathVariable(value = "id") Long id, Model model) {
+        logger.info("----------------- entra en la funcioón cargar listas");
+        List<Raza> lstRaza = razaService.findAll();
+        listaRazas.clear();
+        for (Raza r : lstRaza) {
+            if (r.getEspecie().getId() == id) {
+                listaRazas.add(r);
+            }
+        }
+        for (int aux=0; aux< listaRazas.size(); aux ++ ){
+            logger.info("--elemento lista --> " + listaRazas.get(aux).getNombre());
+            logger.info("--elemento lista de funcion  especies --> " + listaRazas.get(aux).getEspecie().getNombre());
+        }
+        model.addAttribute("lstRazasfiltrada", listaRazas);
+
+        return "redirect:/raza/form/ajax/";
+    }
 
 
+    @GetMapping("/form/ajax/")
+    public String experimento(Map<String, Object> model,
+                              RedirectAttributes flash) {
+
+        Raza raza = new Raza();
+        List<Especie> lstEspecies = especieService.findAll();
+
+
+        logger.info("----------------- entra en la funcioón ajax");
+        for (int aux=0; aux< listaRazas.size(); aux ++ ){
+            logger.info("--elemento lista de funcion ajax--> " + listaRazas.get(aux).getNombre());
+            logger.info("--elemento lista de funcion ajax  especies --> " + listaRazas.get(aux).getEspecie().getNombre());
+        }
+
+        model.put("lstEspecies", lstEspecies);
+        model.put("lstRazasfiltrada", listaRazas);
+        model.put("raza", raza);
+        model.put("titulo", TITULO_MANTENEDOR);
+     //  return "paciente/form::listaDeRazasFiltrada";
+        return "raza/form";
+    }*/
 
     /*
     @GetMapping("/ver/{id}")

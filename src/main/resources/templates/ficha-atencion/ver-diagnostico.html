@@ -27,22 +27,24 @@
                 <p class="card-header">Lista de atenciones</p>
                 <thead class="thead-light">
                 <tr>
-                    <th>#</th>
+               <!--     <th>#</th> -->
                     <th>fecha</th>
                     <th>peso</th>
                     <th>temperatura</th>
                     <th>signos vitales</th>
+                    <th>comentario</th>
                     <th>responsable</th>
                     <th>ver</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="atencion : ${fichaAtencion.atenciones}">
-                    <td th:text="${atencion.id}"></td>
+             <!--       <td th:text="${atencion.id}"></td> -->
                     <td th:text="${#dates.format(atencion.createAt,'dd-MM-yyyy HH:mm')}"></td>
                     <td th:text="${atencion.peso}"></td>
                     <td th:text="${atencion.temperatura}"></td>
                     <td th:text="${atencion.signosVitales}"></td>
+                    <td th:text="${atencion.comentario}"></td>
                     <td th:text="${atencion.usuario.nombre} +' '+ ${atencion.usuario.apellidoPaterno}"></td>
                     <td><a class="btn btn-info btn-xs" th:href="@{'/atencion/ver/' + ${atencion.id}}"
                            th:text="'ver'"></a></td>
@@ -60,7 +62,7 @@
                 <p class="card-header">Lista de diagnosticos</p>
                 <thead class="thead-light">
                 <tr>
-                    <th>#</th>
+          <!--          <th>#</th> -->
                     <th>fecha</th>
                     <th>comentario</th>
                     <th>responsable</th>
@@ -69,7 +71,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="diagnostico : ${fichaAtencion.diagnosticos}">
-                    <td th:text="${diagnostico.id}"></td>
+            <!--        <td th:text="${diagnostico.id}"></td> -->
                     <td th:text="${#dates.format(diagnostico.createAt,'dd-MM-yyyy HH:mm')}"></td>
                     <td th:text="${diagnostico.comentario}"></td>
                     <td th:text="${diagnostico.usuario.nombre} +' '+ ${diagnostico.usuario.apellidoPaterno}"></td>

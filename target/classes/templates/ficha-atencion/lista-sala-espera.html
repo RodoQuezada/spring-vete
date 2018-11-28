@@ -15,7 +15,7 @@
             <table th:if="${not #lists.isEmpty(fichas)}" class="table table-bordered my-4">
                 <thead class="thead-light">
                 <tr>
-                    <th>#</th>
+         <!--       <th>#</th> -->
                     <th>fecha</th>
                     <th>nombre paciente</th>
                     <th>especie</th>
@@ -28,7 +28,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="fichaAtencion : ${fichas}">
-                    <td th:text="${fichaAtencion.id}"></td>
+             <!--   <td th:text="${fichaAtencion.id}"></td> -->
                     <td th:text="${fichaAtencion.fechaAtencion}"></td>
                     <td th:text="${fichaAtencion.paciente.nombre}"></td>
                     <td th:text="${fichaAtencion.paciente.raza.especie.nombre}"></td>

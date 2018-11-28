@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
-<body>
+<body >
 
 <header th:replace="layout/layout :: header"></header>
 
@@ -15,7 +15,7 @@
                 <div class="form-group row">
                     <label for="nombre" class="col-sm-2 col-form-label">Especie</label>
                     <div class="col-xs-4">
-                        <select class="form-control" th:field="*{especie.id}" required="true">
+                        <select id="especie" class="form-control" th:field="*{especie.id}" required="true">
                             <option th:each="especie : ${lstEspecies}"
                                     th:value="${especie.id}"
                                     th:text="${especie.nombre}">
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="color" class="col-sm-2 col-form-label">Color</label>
+                    <label for="color" class="col-sm-2 col-form-label">Color Base</label>
                     <div class="col-xs-4">
                         <input id="color" type="text" th:field="*{color}" class="form-control"
                                th:errorclass="'form-control alert-danger'" required="required"/>
@@ -62,10 +62,10 @@
             </form>
             <br/>
             <p class="card-header">Lista de razas registradas</p>
-            <table class="table table-bordered table-striped my-4">
+            <table    class="table table-bordered table-striped my-4">
                 <thead class="thead-light">
                 <tr>
-                    <th>#</th>
+                <!--    <th>#</th> -->
                     <th>nombre</th>
                     <th>color</th>
                     <th>color secundario</th>
@@ -73,9 +73,9 @@
                     <th>eliminar</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody >
                 <tr th:each="raza : ${lstRazas}">
-                    <th th:text="${raza.id}"></th>
+             <!--       <th th:text="${raza.id}"></th> -->
                     <th th:text="${raza.nombre}"></th>
                     <th th:text="${raza.color}"></th>
                     <th th:text="${raza.colorSecundario}"></th>
@@ -90,6 +90,24 @@
         </div>
     </div>
 </div>
+
+
+<script language="JavaScript" type="text/javascript">
+
+    /*
+    function miFuncion() {
+        alert('entra a funcion');
+        var esp = document.getElementById("especie");
+        var especieId = esp.options[esp.selectedIndex].value;
+        alert(especieId.valueOf());
+        var url = '/raza/cargarlistas/' + especieId;
+        alert("url ---> " + url.valueOf());
+        $("#tablaRazas").load(url);
+        var listaderazasprueba = document.getElementById("tablaRazas");
+        alert("2 - lista --> : " + listaderazasprueba);
+    }*/
+
+</script>
 
 <footer th:replace="layout/layout :: footer"></footer>
 

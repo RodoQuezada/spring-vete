@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -90,7 +91,7 @@ public class PacienteController {
     @PostMapping("/form")
     public String guardar(@RequestParam("file") MultipartFile foto, @Valid Paciente paciente, Model model, BindingResult result, RedirectAttributes flash, SessionStatus status) throws IOException {
 
-       logger.info("Clase form guardar ----------- 1");
+        java.util.Date fecha = new Date();
         if (result.hasErrors()) {
             flash.addFlashAttribute("error", "Error");
             model.addAttribute("titulo", "Agregar paciente");
@@ -102,14 +103,19 @@ public class PacienteController {
             flash.addFlashAttribute("info", "Has subido correctamente '" + uniqueFilename + "'");
             paciente.setFoto(uniqueFilename);
         }
-        logger.info("Clase form guardar --------- 2");
-        logger.info("Clase form guardar ---- Raza ---> " +  paciente.getRaza().getNombre());
-      /*  if (paciente.getRaza().getNombre() == null) {
-            flash.addFlashAttribute("error", "Raza no ingresada");
+
+        logger.info("**************************");
+
+       //validar que fecha de nacimiento no sea posterior al dia actual
+        logger.info("-- fecha -->  " + paciente.getFechaNacimiento().before(fecha));
+        if (paciente.getFechaNacimiento().before(fecha)){
+            logger.info("entra en la validación de fecha del paciente");
+            flash.addFlashAttribute("message", "el errororororororororor");
             model.addAttribute("titulo", "Agregar paciente");
             return "paciente/form";
-        }*/
-        logger.info("Clase form guardar --------- 3");
+        }
+
+
         pacienteService.save(paciente);
         status.setComplete();
         flash.addFlashAttribute("success", "Paciente agregado con éxito");

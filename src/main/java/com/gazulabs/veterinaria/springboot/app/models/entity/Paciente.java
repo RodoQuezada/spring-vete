@@ -1,5 +1,7 @@
 package com.gazulabs.veterinaria.springboot.app.models.entity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -86,6 +88,7 @@ public class Paciente implements Serializable {
     }
 
     public void setFechaNacimiento(Date fechaNacimiento) {
+        System.out.println("pasa por set fecha de nacimiento");
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -94,6 +97,7 @@ public class Paciente implements Serializable {
     }
 
     public void setFechaFallecimiento(Date fechaFallecimiento) {
+        System.out.println("pasa por set de fecha de fallecimiento");
         this.fechaFallecimiento = fechaFallecimiento;
     }
 
