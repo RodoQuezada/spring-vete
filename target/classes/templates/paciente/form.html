@@ -34,7 +34,7 @@
                     <label for="fechaNacimiento" class="col-sm-2 col-form-label">Fecha Nacimiento:</label>
                     <div class="col-sm-4">
                         <input id="fechaNacimiento" type="date" class="form-control" th:field="*{fechaNacimiento}"
-                               th:errorclass="'form-control alert-danger'" required="true"/>
+                               th:errorclass="'form-control alert-danger'" required="true" th:max="${#dates.format(#dates.createNow(), 'YYYY-MM-dd')}"/>
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('fechaNacimiento')}"
                                th:errors="*{fechaNacimiento}"></small>
                     </div>
@@ -122,11 +122,12 @@
                     <label id="textoFallecido" for="fechaFallecimiento" class="col-sm-2 col-form-label" >Fecha Fallecimiento:</label>
                     <div  id="content" class="col-sm-4">
                         <input id="fechaFallecimiento"  type="date" class="form-control" th:field="*{fechaFallecimiento}"
-                               th:errorclass="'form-control alert-danger'"  />
+                               th:errorclass="'form-control alert-danger'"  th:max="${#dates.format(#dates.createNow(), 'YYYY-MM-dd')}"  />
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('fechaFallecimiento')}"
                                th:errors="*{fechaFallecimiento}"></small>
                     </div>
                 </div>
+
 
 
 
@@ -193,6 +194,12 @@
             textoFallecido.style.display='none';
         }
     }
+
+    function filtrodefecha(){
+       // alert('entra a filtro de fecha')
+
+    }
+
 
 
 

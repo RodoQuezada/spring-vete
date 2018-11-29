@@ -23,10 +23,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -80,6 +79,14 @@ public class PacienteController {
         Paciente paciente = new Paciente();
         paciente.setCliente(cliente);
         List<Especie> lstEspecies = especieService.findAll();
+
+        Collections.sort(lstEspecies, new Comparator<Especie>() {
+            @Override
+            public int compare(Especie o1, Especie o2) {
+                return o1.getNombre().compareTo(o2.getNombre());
+            }
+        });
+
         idClienteTemporal = cliente.getId();
         model.put("paciente", paciente);
         model.put("titulo", TITULO_MANTENEDOR);
@@ -104,22 +111,39 @@ public class PacienteController {
             paciente.setFoto(uniqueFilename);
         }
 
-        logger.info("**************************");
+        logger.info("****** debugg ******* ");
+        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+        logger.info("fecha de nacimiento: --> " + (paciente.getFechaNacimiento()).toString());
+        logger.info("fecha de fallecimiento: -->" + paciente.getFechaFallecimiento());
 
-       //validar que fecha de nacimiento no sea posterior al dia actual
-        logger.info("-- fecha -->  " + paciente.getFechaNacimiento().before(fecha));
-        if (paciente.getFechaNacimiento().before(fecha)){
-            logger.info("entra en la validación de fecha del paciente");
-            flash.addFlashAttribute("message", "el errororororororororor");
-            model.addAttribute("titulo", "Agregar paciente");
-            return "paciente/form";
+
+        if (paciente.getFechaFallecimiento() != null){
+            if (paciente.getFechaNacimiento().before(paciente.getFechaFallecimiento())){
+                logger.info("la fecha de nacimiento es anterior a la fecha de fallecimiento ");
+                pacienteService.save(paciente);
+                status.setComplete();
+                flash.addFlashAttribute("success", "Paciente agregado con éxito");
+                return "redirect:/cliente/ver/" + paciente.getCliente().getId();
+            }else {
+                logger.info("la fecha de fallecimiento es anterior a la fecha de nacimiento ... o sea esta mal la wea");
+                flash.addFlashAttribute("error", "Error: la fecha de fallecimiento no puede ser posterior a la de nacimiento");
+                model.addAttribute("titulo", "Agregar paciente");
+                return "redirect:/cliente/ver/" + paciente.getCliente().getId();
+            }
+        }else {
+            pacienteService.save(paciente);
+            status.setComplete();
+            flash.addFlashAttribute("success", "Paciente agregado con éxito");
+            return "redirect:/cliente/ver/" + paciente.getCliente().getId();
         }
 
 
-        pacienteService.save(paciente);
+
+
+   /*     pacienteService.save(paciente);
         status.setComplete();
         flash.addFlashAttribute("success", "Paciente agregado con éxito");
-        return "redirect:/cliente/ver/" + paciente.getCliente().getId();
+        return "redirect:/cliente/ver/" + paciente.getCliente().getId();*/
     }
 
     @GetMapping("/ver/{id}")
@@ -204,6 +228,22 @@ public class PacienteController {
         Paciente paciente = new Paciente();
         paciente.setCliente(cliente);
         List<Especie> lstEspecies = especieService.findAll();
+
+        Collections.sort(lstEspecies, new Comparator<Especie>() {
+            @Override
+            public int compare(Especie o1, Especie o2) {
+                return o1.getNombre().compareTo(o2.getNombre());
+            }
+        });
+
+        Collections.sort(listaRazas, new Comparator<Raza>() {
+            @Override
+            public int compare(Raza o1, Raza o2) {
+                return o1.getNombre().compareTo(o2.getNombre());
+            }
+        });
+
+
         model.put("listaRazas", listaRazas);
         model.put("lstEspecies", lstEspecies);
         model.put("paciente", paciente);

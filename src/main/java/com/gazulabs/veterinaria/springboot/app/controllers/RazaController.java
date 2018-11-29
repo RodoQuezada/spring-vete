@@ -16,9 +16,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/raza")
@@ -44,6 +42,22 @@ public class RazaController {
         Raza raza = new Raza();
         List<Raza> lstRazas = razaService.findAll();
         List<Especie> lstEspecies = especieService.findAll();
+
+        Collections.sort(lstEspecies, new Comparator<Especie>() {
+            @Override
+            public int compare(Especie o1, Especie o2) {
+                return o1.getNombre().compareTo(o2.getNombre());
+            }
+        });
+
+        Collections.sort(listaRazas, new Comparator<Raza>() {
+            @Override
+            public int compare(Raza o1, Raza o2) {
+                return o1.getNombre().compareTo(o2.getNombre());
+            }
+        });
+
+
         model.addAttribute("lstRazas", lstRazas);
         model.addAttribute("lstEspecies", lstEspecies);
         model.addAttribute("raza", raza);

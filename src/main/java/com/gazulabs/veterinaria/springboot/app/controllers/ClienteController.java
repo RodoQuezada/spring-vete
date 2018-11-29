@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +39,6 @@ public class ClienteController {
         Pageable pageRequest = new PageRequest(page, 5);
         Page<Cliente> clientes = clienteService.findAll(pageRequest);
         PageRender<Cliente> pageRender = new PageRender<>("/cliente/listar", clientes);
-
         model.addAttribute("titulo", "Listado de clientes");
         model.addAttribute("clientes", clientes);
         model.addAttribute("page", pageRender);

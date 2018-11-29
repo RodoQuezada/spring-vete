@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -40,7 +42,17 @@ public class UsuarioController {
         }catch (Exception e){
             System.out.println(e.toString());
         }
+
         List<TipoUsuario> lstTipoUsuario = tipoUsuarioService.findAll();
+
+        Collections.sort(lstTipoUsuario, new Comparator<TipoUsuario>() {
+            @Override
+            public int compare(TipoUsuario o1, TipoUsuario o2) {
+                return o1.getNombre().compareTo(o2.getNombre());
+            }
+        });
+
+
         model.addAttribute("lstUsuarios", lstUsuarios);
         model.addAttribute("lstTipoUsuario", lstTipoUsuario);
         model.addAttribute("usuario", usuario);
