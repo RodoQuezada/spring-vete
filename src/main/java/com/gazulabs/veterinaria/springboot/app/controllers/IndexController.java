@@ -41,6 +41,8 @@ public class IndexController {
     }
 
 
+
+
     @GetMapping("/pagado/{id}")
     public String pagarFicha(@PathVariable(value = "id") Long id, SessionStatus status,RedirectAttributes flash, Map<String, Object> model){
         FichaAtencion fichaAtencion = null;

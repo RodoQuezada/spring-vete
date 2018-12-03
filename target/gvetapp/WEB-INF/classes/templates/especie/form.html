@@ -35,14 +35,14 @@
             <table class="table table-bordered table-striped my-4">
                 <thead class="thead-light">
                 <tr>
-                    <th>#</th>
+                 <!--   <th>#</th> -->
                     <th>Nombre</th>
                     <th>Eliminar</th>
                     <th></th>
                 </tr>
                 <tbody>
                 <tr th:each="especie : ${lstEspecies}">
-                    <td th:text="${especie.id}"></td>
+                  <!--  <td th:text="${especie.id}"></td> -->
                     <td th:text="${especie.nombre}"></td>
                     <td><a class="btn btn-danger btn-xs" th:href="@{/especie/eliminar/} + ${especie.id}"
                            th:text="'Eliminar'"

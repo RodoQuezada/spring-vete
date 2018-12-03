@@ -24,7 +24,7 @@ public class UploadFileServiceImpl implements IUploadFileService {
 
     private final static String UPLOADS_FOLDER = "uploads";
     //private final static String UPLOADS_FOLDER = "src//main//resources//static//uploads";
-   // private final static String UPLOADS_FOLDER = "webapps//gvetapp//WEB-INF//classes//static//uploads";
+    //private final static String UPLOADS_FOLDER = "webapps//gvetapp//WEB-INF//classes//static//uploads";
 
     @Override
     public Resource load(String filename) throws MalformedURLException {

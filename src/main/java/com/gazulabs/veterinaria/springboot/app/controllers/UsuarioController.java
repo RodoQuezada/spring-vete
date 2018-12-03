@@ -66,10 +66,19 @@ public class UsuarioController {
         if (result.hasErrors()){
             model.addAttribute("titulo", TITULO_MANTENEDOR);
         }
-        usuarioService.save(usuario);
-        status.setComplete();
-        flash.addFlashAttribute("success", "Usuario agregado con éxito");
-        return "redirect:form";
+
+        if (usuario.getTipoUsuario() == null){
+            flash.addFlashAttribute("error", "No se encuentra registrado el tipo de usuario");
+            return "redirect:/usuario/form";
+        }else if (usuario == null){
+            flash.addFlashAttribute("error", "No se encuentra registrado el tipo de usuario");
+            return "redirect:/usuario/form";
+        } else{
+            usuarioService.save(usuario);
+            status.setComplete();
+            flash.addFlashAttribute("success", "Usuario agregado con éxito");
+            return "redirect:form";
+        }
     }
 
     @RequestMapping("/eliminar/{id}")

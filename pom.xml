@@ -5,7 +5,7 @@
 
     <groupId>com.gazulabs</groupId>
     <artifactId>veterinaria</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>1.9</version>
     <packaging>war</packaging>
 
     <name>gvet</name>

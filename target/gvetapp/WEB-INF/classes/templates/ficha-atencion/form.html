@@ -99,16 +99,29 @@
                     </div>
                 </div>
 
+
+
+
+
+
+                <h4 class="card-title">
+                <a class="btn btn-light btn-xs" th:href="@{'/paciente/ver/' + ${fichaAtencion.paciente.id}}" th:text="'&laquo;
+            volver'"></a>
+                    <a  > <input class="btn btn-primary btn-xs" type="submit" th:value="${titulo}"/></a>
+                <!--
                 <div class="form-group row">
                     <div class="col-xs-4">
                         <input type="submit" th:value="${titulo}"
                                class="btn btn-secondary" />
                     </div>
-                </div>
-
+                </div> -->
+                </h4>
 
 
             </form>
+
+
+
         </div>
     </div>
 </div>

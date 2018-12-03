@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
-<body>
+<body onload="ocultarDiv()">
 
 <header th:replace="layout/layout :: header"></header>
 
@@ -41,16 +41,6 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="fechaFallecimiento" class="col-sm-2 col-form-label">Fecha Fallecimiento:</label>
-                    <div class="col-sm-6">
-                        <input id="fechaFallecimiento" type="date" class="form-control" th:field="*{fechaFallecimiento}"
-                               th:errorclass="'form-control alert-danger'" />
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('fechaFallecimiento')}"
-                               th:errors="*{fechaFallecimiento}"></small>
-                    </div>
-                </div>
-
-                <div class="form-group row">
                     <label for="codigoChip" class="col-sm-2 col-form-label">Codigo Chip:</label>
                     <div class="col-sm-6">
                         <input id="codigoChip" type="text" th:field="*{codigoChip}" class="form-control"
@@ -71,7 +61,15 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="file" class="col-sm-2 col-form-label">Foto:</label>
+                    <label id="textfilelabel" for="file" class="col-sm-2 col-form-label">Foto url:</label>
+                    <div class="col-sm-6">
+                        <input id="textfile" type="text" th:field="*{foto}" name="Textfile" class="form-control" disabled>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <label id="textfoto" for="file" class="col-sm-2 col-form-label">Foto:</label>
                     <div class="col-sm-6">
                         <input id="file" type="file" name="file" class="form-control">
                     </div>
@@ -79,7 +77,7 @@
                 </div>
 
                 <div class="form-group row align-baseline">
-                    <label for="castrado" class="col-sm-2 col-form-label">Castrado:</label>
+                    <label for="castrado" class="col-sm-2 col-form-label">Esterilizado:</label>
                     <div class="col-sm-6">
                         <input id="castrado" type="checkbox" th:field="*{castrado}" class="custom-control custom-checkbox"
                                th:errorclass="'form-control alert-danger'" />
@@ -88,12 +86,44 @@
                     </div>
                 </div>
 
+                <div class="form-group row align-baseline">
+                    <label for="check" class="col-sm-2 col-form-label">Fallecido:</label>
+                    <div class="col-sm-4">
+                        <input id="check" type="checkbox"  class="custom-control custom-checkbox"
+                               onchange="javascript:showContent()"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label id="textoFallecido" for="fechaFallecimiento" class="col-sm-2 col-form-label">Fecha Fallecimiento:</label>
+                    <div   id="content" class="col-sm-6">
+                        <input id="fechaFallecimiento" type="date" class="form-control" th:field="*{fechaFallecimiento}"
+                               th:errorclass="'form-control alert-danger'" />
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('fechaFallecimiento')}"
+                               th:errors="*{fechaFallecimiento}"></small>
+                    </div>
+                </div>
+
+
+                <div class="card-group">
+                    <h4 class="card-title">
+                        <a th:href="@{'/cliente/ver/' + ${paciente.cliente.id}}" class="btn btn-light btn-xs">&laquo;
+                            volver</a>
+                    </h4>
+
+                    <h4 class="card-title">
+                        <a> <input type="submit" th:value="${titulo}" class="btn btn-primary btn-xs"/></a>
+                    </h4>
+                </div>
+
+
+                <!--
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <input type="submit" th:value="${titulo}"
                                class="btn btn-secondary" />
                     </div>
-                </div>
+                </div> -->
 
             </form>
 
@@ -101,6 +131,71 @@
         </div>
     </div>
 </div>
+
+<script language="JavaScript" type="text/javascript">
+
+    function ocultarDiv() {
+        // alert('funcionando al cargar la pagina ! ')
+
+        // toma de elementos
+
+        //input con fecha y texto de fallecido
+        element = document.getElementById("content");
+        textoFallecido = document.getElementById("textoFallecido");
+
+        //input con modulo para subir foto
+        fototexto = document.getElementById("textfoto");
+        file = document.getElementById("file");
+
+
+        //input con url de foto
+        textfilelabel = document.getElementById("textfilelabel");
+        textfile = document.getElementById("textfile");
+
+        // cambios de CSS
+        element.style.display='none';
+        textoFallecido.style.display='none';
+
+        if ($('#textfile').val().length == 0) {
+        //    alert('no hay foto ingresada');
+            textfilelabel.style.display='none';
+            textfile.style.display='none';
+        } else {
+         //   alert('hay foto ingresada');
+            fototexto.style.display='none';
+            file.style.display='none';
+        }
+
+
+    }
+
+    function miFuncion() {
+        var esp = document.getElementById("especie");
+        var especieId = esp.options[esp.selectedIndex].value;
+        //producccion
+        //   var url = '/gvetapp/paciente/cargarlistas/' + especieId;
+        // desarrollo
+        var url = '/paciente/cargarlistas/' + especieId;
+        $("#raza").load(url);
+    }
+
+
+    function showContent() {
+        //  alert('funcionando!')
+        element = document.getElementById("content");
+        check = document.getElementById("check");
+        textoFallecido = document.getElementById("textoFallecido");
+        if (check.checked) {
+            element.style.display='block';
+            textoFallecido.style.display='block';
+        }
+        else {
+            element.style.display='none';
+            textoFallecido.style.display='none';
+        }
+    }
+
+</script>
 
 <footer th:replace="layout/layout :: footer"></footer>
 

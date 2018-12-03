@@ -27,7 +27,7 @@
                 <p class="card-header"> Lista de Pacientes </p>
                 <thead class="thead-inverse">
                 <tr>
-                    <th>#</th>
+                 <!--   <th>#</th> -->
                     <th>nombre</th>
                     <th>especie</th>
                     <th>raza</th>
@@ -35,17 +35,17 @@
                     <th>detalle</th>
                     <th>editar</th>
                     <th>eliminar</th>
-                    <th>atender</th>
+                    <th>atención rapida</th>
                 </tr>
                 </thead>
                     <tbody>
                     <tr th:each="paciente: ${cliente.pacientes}">
-                        <td th:text="${paciente.id}"></td>
+                <!--        <td th:text="${paciente.id}"></td> -->
                         <td th:text="${paciente.nombre}"></td>
                         <td th:text="${paciente.raza.especie.nombre}"></td>
                         <td th:text="${paciente.raza.nombre}"></td>
                         <td th:text="${paciente.sexo == 'm' ? 'Masculino' : 'Femenino'}"></td>
-                        <td ><a class="btn btn-primary btn-xs" th:href="@{/paciente/ver/} + ${paciente.id}" th:text="'detalle'"></a>
+                        <td ><a class="btn btn-info btn-xs" th:href="@{/paciente/ver/} + ${paciente.id}" th:text="'detalle'"></a>
                         </td>
                         <td ><a class="btn btn-success btn-xs" th:href="@{/paciente/editar/} + ${paciente.id}" th:text="'editar'"></a>
                         </td>
@@ -53,13 +53,25 @@
                                 onclick="return confirm('Estás seguro que quieres eliminar?');"
                         ></a>
                         </td>
-                        <td><a class="btn btn-primary btn-xs" th:href="@{/ficha-atencion/form-completo/} + ${paciente.id}" th:text="'atender'"></a>
+                        <td><a class="btn btn-primary btn-xs" th:href="@{/ficha-atencion/form-completo/} + ${paciente.id}" th:text="'atención rapida'"></a>
                         </td>
                     </tbody>
             </table>
-            <h4 class="card-title">
-                <a class="btn btn-primary btn-xs" th:href="@{'/paciente/form/' + ${cliente.id}}" th:text="'agregar paciente'"></a>
-            </h4>
+
+
+            <div class="card-group">
+                <h4 class="card-title">
+                    <a th:href="@{'/cliente/listar/'}" class="btn btn-light btn-xs">&laquo;
+                        volver</a>
+                </h4>
+
+                <h4 class="card-title">
+                    <a class="btn btn-primary btn-xs" th:href="@{'/paciente/form/' + ${cliente.id}}" th:text="'agregar paciente'"></a>
+                </h4>
+            </div>
+
+
+
 
         </div>
     </div>

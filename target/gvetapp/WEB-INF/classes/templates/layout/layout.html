@@ -8,6 +8,7 @@
         <link rel="stylesheet"
               th:href="@{/css/jquery-ui.min.css}"/>
 
+
     </head>
     <body>
         <header th:fragment="header">
@@ -123,7 +124,7 @@
                     </b>
                 </p>
                 <p>Powered by Spring Boot y Thymeleaft</p>
-
+                <p>Versión 1.9.1</p>
                 <p sec:authorize="isAuthenticated()">
                     Usuario Logeado:
                     <span sec:authentication="name"></span>
@@ -136,6 +137,9 @@
             <script th:src="@{/js/popper.min.js}"></script>
             <script th:src="@{/js/bootstrap.min.js}"></script>
             <script th:src="@{/js/jquery-ui.min.js}"></script>
+
+
+
         </footer>
 
 
