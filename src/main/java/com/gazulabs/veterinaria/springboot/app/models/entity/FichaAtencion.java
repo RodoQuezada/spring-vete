@@ -48,6 +48,8 @@ public class FichaAtencion implements Serializable {
     @OneToMany(mappedBy = "fichaAtencion", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     List<Diagnostico> diagnosticos;
 
+
+
     @PrePersist
     public void prePersist() {
         this.fechaAtencion = new Date();

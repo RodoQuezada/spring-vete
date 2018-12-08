@@ -16,7 +16,7 @@ public class Diagnostico implements Serializable {
 
     private String comentario;
 
-    @Column(name = "create_at")
+
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date createAt;
@@ -29,9 +29,14 @@ public class Diagnostico implements Serializable {
         createAt = new Date();
     }
 
+
+    @ManyToOne (fetch = FetchType.LAZY)
+    private Usuario usuario;
+
+    /*
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    private Usuario usuario;*/
 
     public Long getId() {
         return id;

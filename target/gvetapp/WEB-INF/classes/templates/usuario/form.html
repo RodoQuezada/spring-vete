@@ -11,7 +11,7 @@
         <div class="card-body">
 
             <form th:action="@{/usuario/form}" th:object="${usuario}" method="post">
-                <select class="form-control" th:field="*{tipoUsuario.id}">
+                <select class="form-control" th:field="*{tipoUsuario.id}" required="true">
                     <option th:each="tipoUsuario : ${lstTipoUsuario}"
                             th:value="${tipoUsuario.id}"
                             th:text="${tipoUsuario.nombre}"></option>

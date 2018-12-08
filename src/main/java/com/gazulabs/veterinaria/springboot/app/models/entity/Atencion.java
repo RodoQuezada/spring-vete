@@ -29,9 +29,14 @@ public class Atencion implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private FichaAtencion fichaAtencion;
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Usuario usuario;
+
+    /*
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    private Usuario usuario; */
 
     @PrePersist
     public void prePersist(){

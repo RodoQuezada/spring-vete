@@ -61,6 +61,30 @@
                 </div>
 
                 <div class="form-group row">
+                    <label for="especie" class="col-sm-2 col-form-label">Especie:</label>
+                    <div class="col-sm-4">
+                        <select id="especie" name="especie" class="form-control custom-select" th:field="*{raza.especie.id}" onchange="miFuncion()"  required="true">
+                            <option th:each="especie : ${lstEspecies}"
+                                    th:value="${especie.id}"
+                                    th:text="${especie.nombre}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="raza" class="col-sm-2 col-form-label">Raza:</label>
+                    <div class="col-sm-4">
+                        <select id="raza" name="raza" class="form-control custom-select" th:field="*{raza.id}" required="true" >
+                            <option th:fragment="listaDeRazasFiltrada"
+                                    th:each="raza : ${listaRazas}"
+                                    th:value="${raza.id}"
+                                    th:text="${raza.nombre} + ' (Color: ' +  ${raza.color} + ')' "> </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
                     <label id="textfilelabel" for="file" class="col-sm-2 col-form-label">Foto url:</label>
                     <div class="col-sm-6">
                         <input id="textfile" type="text" th:field="*{foto}" name="Textfile" class="form-control" disabled>
@@ -168,12 +192,12 @@
 
 
     }
-
     function miFuncion() {
+        //alert('entra en funciona JS')
         var esp = document.getElementById("especie");
         var especieId = esp.options[esp.selectedIndex].value;
-        //producccion
-        //   var url = '/gvetapp/paciente/cargarlistas/' + especieId;
+        // producccion
+        //var url = '/gvetapp/paciente/cargarlistas/' + especieId;
         // desarrollo
         var url = '/paciente/cargarlistas/' + especieId;
         $("#raza").load(url);

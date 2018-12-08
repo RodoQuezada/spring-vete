@@ -36,7 +36,7 @@ public class ClienteController {
     @GetMapping("/listar")
     public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 
-        Pageable pageRequest = new PageRequest(page, 5);
+        Pageable pageRequest = new PageRequest(page, 10);
         Page<Cliente> clientes = clienteService.findAll(pageRequest);
         PageRender<Cliente> pageRender = new PageRender<>("/cliente/listar", clientes);
         model.addAttribute("titulo", "Listado de clientes");

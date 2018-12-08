@@ -3,6 +3,7 @@ package com.gazulabs.veterinaria.springboot.app.models.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table (name = "usuarios")
@@ -26,8 +27,16 @@ public class Usuario implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private TipoUsuario tipoUsuario;
 
+    /*
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Atencion atencion;
+    private Atencion atencion;*/
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Atencion> atenciones;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Diagnostico>  diagnosticos;
+
 
     public Long getId() {
         return id;
@@ -69,12 +78,20 @@ public class Usuario implements Serializable {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public Atencion getAtencion() {
-        return atencion;
+    public List<Atencion> getAtenciones() {
+        return atenciones;
     }
 
-    public void setAtencion(Atencion atencion) {
-        this.atencion = atencion;
+    public void setAtenciones(List<Atencion> atenciones) {
+        this.atenciones = atenciones;
+    }
+
+    public List<Diagnostico> getDiagnosticos() {
+        return diagnosticos;
+    }
+
+    public void setDiagnosticos(List<Diagnostico> diagnosticos) {
+        this.diagnosticos = diagnosticos;
     }
 
     public static final long serialVersionUID = 1L;

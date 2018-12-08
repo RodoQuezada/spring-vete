@@ -50,11 +50,18 @@ public class PacienteController {
 
     private Long idClienteTemporal;
 
+    private  Long idPacienteTemporal;
+
+    private  Long idRazaTemporal;
+
+    private  Long idEspecieTemporal;
+
     private static List<Raza> listaRazas = new ArrayList<Raza>();
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private static final String TITULO_MANTENEDOR = "Agregar Paciente";
+
 
     @GetMapping(value = "/uploads/{filename:.+}")
     public ResponseEntity<Resource> verFoto(@PathVariable String filename) throws MalformedURLException {
@@ -111,10 +118,8 @@ public class PacienteController {
             paciente.setFoto(uniqueFilename);
         }
 
-        logger.info("****** debugg ******* ");
-        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-        logger.info("fecha de nacimiento: --> " + (paciente.getFechaNacimiento()).toString());
-        logger.info("fecha de fallecimiento: -->" + paciente.getFechaFallecimiento());
+
+        //SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 
 
         if (paciente.getFechaFallecimiento() != null){
@@ -131,19 +136,14 @@ public class PacienteController {
                 return "redirect:/cliente/ver/" + paciente.getCliente().getId();
             }
         }else {
+
+            String mensajeFlash = (paciente.getId() != null) ? "Paciente editado con éxito" : "Paciente creado con éxito";
+
             pacienteService.save(paciente);
             status.setComplete();
-            flash.addFlashAttribute("success", "Paciente agregado con éxito");
+            flash.addFlashAttribute("success", mensajeFlash);
             return "redirect:/cliente/ver/" + paciente.getCliente().getId();
         }
-
-
-
-
-   /*     pacienteService.save(paciente);
-        status.setComplete();
-        flash.addFlashAttribute("success", "Paciente agregado con éxito");
-        return "redirect:/cliente/ver/" + paciente.getCliente().getId();*/
     }
 
     @GetMapping("/ver/{id}")
@@ -169,6 +169,21 @@ public class PacienteController {
             }
         }
         logger.info("--Clase Editar --  Raza : " .concat(paciente.getRaza().getNombre()));
+
+        List<Especie> lstEspecies = especieService.findAll();
+
+        Collections.sort(lstEspecies, new Comparator<Especie>() {
+            @Override
+            public int compare(Especie o1, Especie o2) {
+                return o1.getNombre().compareTo(o2.getNombre());
+            }
+        });
+        logger.info("id --- > " + id);
+        logger.info("id statico request edit: " + idPacienteTemporal);
+        idPacienteTemporal = id;
+        logger.info("id statico request 22222222222: " + idPacienteTemporal);
+        model.put("lstEspecies", lstEspecies);
+        model.put("listaRazas", listaRazas);
         model.put("paciente", paciente);
         model.put("titulo", "Editar Paciente");
      //   return "paciente/form";
@@ -246,7 +261,7 @@ public class PacienteController {
 
         model.put("listaRazas", listaRazas);
         model.put("lstEspecies", lstEspecies);
-        model.put("paciente", paciente);
+      //  model.put("paciente", paciente);
         model.put("titulo", TITULO_MANTENEDOR);
         return "paciente/form::listaDeRazasFiltrada";
     }

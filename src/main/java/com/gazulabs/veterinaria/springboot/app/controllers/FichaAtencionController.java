@@ -222,7 +222,7 @@ public class FichaAtencionController {
         } else{
             System.out.println("-- Cagaso");
         }
-        return "ficha-atencion/lista-pacientes-altas";
+        return "redirect:/ficha-atencion/lista-pacientes-altas";
     }
 
     @GetMapping("/dar-alta/{id}")
