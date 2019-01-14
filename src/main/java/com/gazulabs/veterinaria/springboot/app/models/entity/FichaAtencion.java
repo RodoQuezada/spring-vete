@@ -37,7 +37,7 @@ public class FichaAtencion implements Serializable {
     @Column(name = "estado_pago")
     private Boolean estadoPago;
 
-    private String diagnostico;
+  //  private String diagnostico;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Paciente paciente;
@@ -100,14 +100,14 @@ public class FichaAtencion implements Serializable {
         this.estadoPago = estadoPago;
     }
 
-    public String getDiagnostico() {
+   /* public String getDiagnostico() {
         return diagnostico;
     }
 
     public void setDiagnostico(String diagnostico) {
         this.diagnostico = diagnostico;
     }
-
+*/
     public Paciente getPaciente() {
         return paciente;
     }

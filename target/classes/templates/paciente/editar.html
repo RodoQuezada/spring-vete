@@ -40,15 +40,6 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label for="codigoChip" class="col-sm-2 col-form-label">Codigo Chip:</label>
-                    <div class="col-sm-6">
-                        <input id="codigoChip" type="text" th:field="*{codigoChip}" class="form-control"
-                               th:errorclass="'form-control alert-danger'" />
-                        <small class="form-text text-danger" th:if="${#fields.hasErrors('codigoChip')}"
-                               th:errors="*{codigoChip}"></small>
-                    </div>
-                </div>
 
                 <div class="form-group row">
                     <label for="sexo" class="col-sm-2 col-form-label">Sexo:</label>
@@ -107,6 +98,26 @@
                                th:errorclass="'form-control alert-danger'" />
                         <small class="form-text text-danger" th:if="${#fields.hasErrors('castrado')}"
                                th:errors="*{castrado}"></small>
+                    </div>
+                </div>
+
+                <div class="form-group row align-baseline">
+                    <label for="showchip" class="col-sm-2 col-form-label">Chip Integrado:</label>
+                    <div class="col-sm-4">
+                        <input id="showchip" type="checkbox"  class="custom-control custom-checkbox"
+                               onchange="javascript:showChipIntegrado()"/>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group row">
+                    <label id="textocodigochip" for="codigoChip" class="col-sm-2 col-form-label">Codigo Chip:</label>
+                    <div id="inputcodigochip" class="col-sm-4">
+                        <input id="codigoChip" type="text" th:field="*{codigoChip}" class="form-control"
+                               th:errorclass="'form-control alert-danger'" min="15" max="15" pattern="[0-9]{15}"/>
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('codigoChip')}"
+                               th:errors="*{codigoChip}"></small>
                     </div>
                 </div>
 
@@ -176,9 +187,16 @@
         textfilelabel = document.getElementById("textfilelabel");
         textfile = document.getElementById("textfile");
 
+
+        inputcodigochip = document.getElementById("inputcodigochip");
+        textocodigochip = document.getElementById("textocodigochip");
+
+
         // cambios de CSS
         element.style.display='none';
         textoFallecido.style.display='none';
+        inputcodigochip.style.display='none';
+        textocodigochip.style.display='none';
 
         if ($('#textfile').val().length == 0) {
         //    alert('no hay foto ingresada');
@@ -197,7 +215,7 @@
         var esp = document.getElementById("especie");
         var especieId = esp.options[esp.selectedIndex].value;
         // producccion
-        //var url = '/gvetapp/paciente/cargarlistas/' + especieId;
+       // var url = '/gvetapp/paciente/cargarlistas/' + especieId;
         // desarrollo
         var url = '/paciente/cargarlistas/' + especieId;
         $("#raza").load(url);
@@ -209,6 +227,21 @@
         element = document.getElementById("content");
         check = document.getElementById("check");
         textoFallecido = document.getElementById("textoFallecido");
+        if (check.checked) {
+            element.style.display='block';
+            textoFallecido.style.display='block';
+        }
+        else {
+            element.style.display='none';
+            textoFallecido.style.display='none';
+        }
+    }
+
+    function showChipIntegrado() {
+        //  alert('funcionando!')
+        element = document.getElementById("inputcodigochip");
+        check = document.getElementById("showchip");
+        textoFallecido = document.getElementById("textocodigochip");
         if (check.checked) {
             element.style.display='block';
             textoFallecido.style.display='block';

@@ -1,11 +1,14 @@
 package com.gazulabs.veterinaria.springboot.app.view.pdf;
 
 
+import com.gazulabs.veterinaria.springboot.app.models.entity.Atencion;
+import com.gazulabs.veterinaria.springboot.app.models.entity.Diagnostico;
 import com.gazulabs.veterinaria.springboot.app.models.entity.FichaAtencion;
 import com.lowagie.text.Document;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfTable;
 import com.lowagie.text.pdf.PdfWriter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
@@ -34,7 +37,7 @@ public class FichaAtencionPdfView extends AbstractPdfView {
 
         PdfPCell cell = null;
         cell = new PdfPCell(new Phrase("DATOS DEL CLIENTE"));
-        cell.setBackgroundColor(new Color(184, 218, 255));
+        cell.setBackgroundColor(new Color(174, 214, 241));
         cell.setPadding(8f);
 
         tablaCliente.addCell(cell);
@@ -47,7 +50,7 @@ public class FichaAtencionPdfView extends AbstractPdfView {
         tablaPaciente.setSpacingAfter(20);
 
         cell = new PdfPCell(new Phrase("DATOS DEL PACIENTE"));
-        cell.setBackgroundColor(new Color(195, 230, 203));
+        cell.setBackgroundColor(new Color(93, 173, 226));
         cell.setPadding(8f);
 
         tablaPaciente.addCell(cell);
@@ -59,19 +62,61 @@ public class FichaAtencionPdfView extends AbstractPdfView {
         tablaFichaAtencion.setSpacingAfter(20);
 
         cell = new PdfPCell(new Phrase("DATOS FICHA ATENCIÓN"));
-        cell.setBackgroundColor(new Color(50, 230, 203));
+        cell.setBackgroundColor(new Color(46, 134, 193  ));
         cell.setPadding(8f);
 
         tablaFichaAtencion.addCell(cell);
 
         tablaFichaAtencion.addCell("Fecha: " + df.format(fichaAtencion.getFechaAtencion()));
         tablaFichaAtencion.addCell("Motivo Visita: " + fichaAtencion.getMotivo());
-        tablaFichaAtencion.addCell("Diagnostico: " + fichaAtencion.getDiagnostico());
+
+
+        PdfPTable tablaAtencion = new PdfPTable(1);
+        tablaAtencion.setSpacingAfter(20);
+
+        cell = new PdfPCell(new Phrase("ATENCIONES"));
+        cell.setBackgroundColor(new Color(88, 214, 141));
+        cell.setPadding(8f);
+
+        tablaAtencion.addCell(cell);
+
+        if (!fichaAtencion.getAtenciones().isEmpty()){
+            for (Atencion atencion: fichaAtencion.getAtenciones()) {
+
+                tablaAtencion.addCell("Atención " + df.format(atencion.getCreateAt()));
+                tablaAtencion.addCell("Peso: " + atencion.getPeso());
+                tablaAtencion.addCell("Temperatura: " + atencion.getTemperatura());
+                tablaAtencion.addCell("Signos Vitales: " + atencion.getSignosVitales());
+                tablaAtencion.addCell("Comentario: " + atencion.getComentario());
+                tablaAtencion.addCell(" ");
+            }
+        }else{
+            tablaAtencion.addCell("Sin atenciones");
+        }
+
+        PdfPTable tablaDiagnostico = new PdfPTable(1);
+        tablaDiagnostico.setSpacingAfter(20);
+
+        cell = new PdfPCell(new Phrase("DIAGNOSTICOS"));
+        cell.setBackgroundColor(new Color(48, 214, 141));
+        cell.setPadding(8f);
+
+        tablaDiagnostico.addCell(cell);
+
+        if (!fichaAtencion.getDiagnosticos().isEmpty()){
+            for (Diagnostico diagnostico: fichaAtencion.getDiagnosticos()) {
+                tablaDiagnostico.addCell("Diagnostico "+ df.format(diagnostico.getCreateAt())+" : " + diagnostico.getComentario());
+                tablaDiagnostico.addCell(" ");
+            }
+        }else{
+            tablaFichaAtencion.addCell("Sin diagnostico");
+        }
 
         document.add(tablaCliente);
         document.add(tablaPaciente);
         document.add(tablaFichaAtencion);
-
+        document.add(tablaAtencion);
+        document.add(tablaDiagnostico);
 
     }
 }

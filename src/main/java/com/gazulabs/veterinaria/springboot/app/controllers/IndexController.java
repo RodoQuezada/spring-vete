@@ -55,6 +55,15 @@ public class IndexController {
         fichaAtencion.setEstadoPago(true);
         fichaAtencionService.save(fichaAtencion);
         status.setComplete();
+
+        List<FichaAtencion> fichas = new ArrayList<>();
+        for (FichaAtencion f: fichaAtencionService.findAll()) {
+            if (f.getEstadoAtencion() == 'f' && f.getEstadoPago() == false){
+                fichas.add(f);
+            }
+        }
+        model.put("lstAtenciones", fichas);
+
         model.put("fichaAtencion",fichaAtencion);
         model.put("titulo", "Home Veterinaria");
         return "index";

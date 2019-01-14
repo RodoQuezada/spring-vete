@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Implementation-Title: gvet
-Implementation-Version: 1.9
+Implementation-Version: 1.9.3
 Built-By: rodo
 Implementation-Vendor-Id: com.gazulabs
 Created-By: IntelliJ IDEA

@@ -118,7 +118,8 @@ public class FichaAtencionController {
         FichaAtencion fichaTemp = fichaAtencionService.findById(id);
         fichaTemp.setEstadoAtencion('a');
         fichaAtencionService.save(fichaTemp);
-        return "redirect:/ficha-atencion/lista-sala-espera";
+      //  return "redirect:/ficha-atencion/lista-sala-espera";
+        return "redirect:/ficha-atencion/ver-diagnostico/" + id;
     }
 
     @GetMapping("/lista-pacientes-atendidos")

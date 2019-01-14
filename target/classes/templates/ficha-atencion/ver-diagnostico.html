@@ -106,11 +106,13 @@
                 </h4>
 
                 <h4 class="card-title">
-                <a class="btn btn-danger btn-xs float-right" th:href="@{'/ficha-atencion/ver-diagnostico/' + ${fichaAtencion.id}(format=pdf)}" th:text="'PDF'"></a>
+                <a class="btn btn-danger btn-xs float-right" th:href="@{'/ficha-atencion/ver-diagnostico/' + ${fichaAtencion.id}(format=pdf)}" th:text="'PDF'" target="_blank"></a>
                 </h4>
 
                 <h4 class="card-title">
-                    <a class="btn btn-info btn-xs float-right" th:href="@{'/ficha-atencion/dar-alta/' + ${fichaAtencion.id}}" th:text="'Alta Paciente'"></a>
+                    <a class="btn btn-info btn-xs float-right" th:href="@{'/ficha-atencion/dar-alta/' + ${fichaAtencion.id}}" th:text="'Alta Paciente'"
+                       onclick="return confirm('¿Estás seguro que quieres dar de alta al paciente?');"
+                    ></a>
                 </h4>
 
                 
